@@ -1,25 +1,20 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueI18n from '@intlify/vite-plugin-vue-i18n'
-
-import { join, resolve } from 'path'
-export default defineConfig({
-  mode: 'development',
-  resolve: {
-    alias: {
-      '@': join(__dirname, './src'),
-    },
-  },
-  plugins: [
-    vue(),
-    vueI18n({
-      include: resolve(__dirname, './locales/**'),
-    }),
-  ],
-  define: { 'process.env': {} },
-  css: {
-    preprocessorOptions: {
-      scss: { additionalData: ` @import "@/styles/variables.scss";` },
-    },
-  },
-})
+name: Build Vue
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build_vue:
+    runs-on: ubuntu-latest
+    name: Build Vue
+    steps:
+      - uses: actions/checkout@v2
+      - id: Build-Vue
+        uses: xRealNeon/VuePagesAction@1.0.0
+        with:
+          username: 'IMT-Atlantique-FIL-2020-2023'
+          reponame: 'NADA-webapp'
+          token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          VUE_APP_KEY: ${{ secrets.VUE_APP_KEY }}
+          VUE_APP_URL: ${{ secrets.VUE_APP_URL }}
