@@ -8,9 +8,15 @@
   </p>
 </template>
 
+<<<<<<< HEAD
 <script lang="ts">
   export default {
     name: 'HelloWorld',
     props: { msg: String },
   }
+=======
+<script setup lang="ts">
+  import { defineProps } from '@vue/runtime-core'
+  defineProps<{ msg: string }>()
+>>>>>>> main
 </script>
