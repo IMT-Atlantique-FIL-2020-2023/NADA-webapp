@@ -1,24 +1,25 @@
-import * as path from 'path'
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import pkg from './package.json'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vueI18n from "@intlify/vite-plugin-vue-i18n";
 
-process.env.VITE_APP_VERSION = pkg.version
-if (process.env.NODE_ENV === 'production') {
-  process.env.VITE_APP_BUILD_EPOCH = new Date().getTime().toString()
-}
-
+import { join, resolve } from "path";
 export default defineConfig({
-  plugins: [
-    vue({
-      script: {
-        refSugar: true,
-      },
-    }),
-  ],
+  mode: "development",
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      "@": join(__dirname, "./src"),
     },
   },
-})
+  plugins: [
+    vue(),
+    vueI18n({
+      include: resolve(__dirname, "./locales/**"),
+    }),
+  ],
+  define: { "process.env": {} },
+  css: {
+    preprocessorOptions: {
+      scss: { additionalData: ` @import "@/styles/variables.scss";` },
+    },
+  },
+});

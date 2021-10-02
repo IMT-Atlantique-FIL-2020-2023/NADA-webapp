@@ -1,18 +1,8 @@
-import { createApp } from 'vue'
-import BaseTemplate from '@/pages/BaseTemplate.vue'
-import App from './App.vue'
-import router from './router'
-import { createHead } from '@vueuse/head'
-import { store } from './store'
-import './index.css'
+import { createApp } from "vue";
+import App from "./App.vue";
+import { vuetify } from "./plugins/vuetify";
+import router from "./router";
+import i18n from "./plugins/i18n";
+import { store, key } from "./store/index";
 
-const head = createHead()
-const app = createApp(App)
-
-app.component('BaseTemplate', BaseTemplate)
-
-app.use(store)
-app.use(router)
-app.use(head)
-
-app.mount('#app')
+createApp(App).use(store, key).use(router).use(vuetify).use(i18n).mount("#app");
