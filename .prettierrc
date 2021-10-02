@@ -1,4 +1,5 @@
 {
+  "endOfLine": "auto",
   "singleQuote": true,
   "semi": false,
   "vueIndentScriptAndStyle": true
