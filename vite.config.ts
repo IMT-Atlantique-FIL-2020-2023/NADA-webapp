@@ -1,25 +1,25 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import vueI18n from "@intlify/vite-plugin-vue-i18n";
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueI18n from '@intlify/vite-plugin-vue-i18n'
 
-import { join, resolve } from "path";
+import { join, resolve } from 'path'
 export default defineConfig({
-  mode: "development",
+  mode: 'development',
   resolve: {
     alias: {
-      "@": join(__dirname, "./src"),
+      '@': join(__dirname, './src'),
     },
   },
   plugins: [
     vue(),
     vueI18n({
-      include: resolve(__dirname, "./locales/**"),
+      include: resolve(__dirname, './locales/**'),
     }),
   ],
-  define: { "process.env": {} },
+  define: { 'process.env': {} },
   css: {
     preprocessorOptions: {
       scss: { additionalData: ` @import "@/styles/variables.scss";` },
     },
   },
-});
+})
