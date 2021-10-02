@@ -4,7 +4,11 @@ import vueI18n from '@intlify/vite-plugin-vue-i18n'
 
 import { join, resolve } from 'path'
 export default defineConfig({
+  base: process.env.NODE_ENV === 'production' ? '/NADA-webapp/' : '/',
   mode: 'development',
+  server: {
+    port: 8080,
+  },
   resolve: {
     alias: {
       '@': join(__dirname, './src'),
