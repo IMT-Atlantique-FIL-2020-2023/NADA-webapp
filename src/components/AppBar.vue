@@ -3,9 +3,9 @@
     <div>app-bar</div>
     <n-card>
       <n-space>
-        <n-switch v-model="dark" @update="updateTheme">
-          <template #checked>Big wheels keep on turnin'</template>
-          <template #unchecked>Carry me home to see my kin</template>
+        <n-switch v-model:value="dark" @update:value="updateTheme">
+          <template #checked><mdi-sun /></template>
+          <template #unchecked><mdi-moon /></template>
         </n-switch>
       </n-space>
     </n-card>
@@ -13,9 +13,12 @@
 </template>
 <script lang="ts">
   import { mapMutations } from 'vuex'
+  import mdiSun from '~icons/mdi/white-balance-sunny'
+  import mdiMoon from '~icons/mdi/moon-waning-crescent'
 
   export default {
     name: 'AppBar',
+    components: { mdiSun, mdiMoon },
     data() {
       return {
         dark: false,

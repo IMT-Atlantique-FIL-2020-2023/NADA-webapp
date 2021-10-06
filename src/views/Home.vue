@@ -10,11 +10,7 @@
       /></n-form-item>
       <n-form-item>
         <n-button size="large">
-          <template #icon>
-            <n-icon>
-              <icon-map></icon-map>
-            </n-icon>
-          </template>
+          <template #icon><mdi-map /></template>
         </n-button>
       </n-form-item>
     </n-form>
@@ -29,11 +25,11 @@
 </template>
 <script lang="ts">
   import SplitPanes from '../components/SplitPanes.vue'
-  import IconMap from '~icons/mdi/map'
+  import mdiMap from '~icons/mdi/map'
 
   export default {
     name: 'Home',
-    components: { SplitPanes, IconMap },
+    components: { SplitPanes, mdiMap },
     data() {
       return {
         selectedValue: null,
