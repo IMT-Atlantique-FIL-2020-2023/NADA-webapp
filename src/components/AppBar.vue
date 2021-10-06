@@ -1,14 +1,9 @@
 <template>
-  <div>
-    <div>app-bar</div>
-    <n-card>
-      <n-space>
-        <n-switch v-model:value="dark" @update:value="updateTheme">
-          <template #checked><mdi-sun /></template>
-          <template #unchecked><mdi-moon /></template>
-        </n-switch>
-      </n-space>
-    </n-card>
+  <div class="nada-bar">
+    <n-switch v-model:value="dark" @update:value="updateTheme">
+      <template #checked><mdi-sun /></template>
+      <template #unchecked><mdi-moon /></template>
+    </n-switch>
   </div>
 </template>
 <script lang="ts">

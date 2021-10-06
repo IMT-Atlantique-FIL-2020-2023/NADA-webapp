@@ -41,4 +41,7 @@
     margin: 0px;
     height: 100%;
   }
+  .splitpanes__pane {
+    background-color: transparent !important;
+  }
 </style>
