@@ -1,10 +1,20 @@
 <template>
-  <div class="nada-bar">
-    <n-switch v-model:value="dark" @update:value="updateTheme">
-      <template #checked><mdi-sun /></template>
-      <template #unchecked><mdi-moon /></template>
-    </n-switch>
-  </div>
+  <n-space class="nada-bar">
+    <n-space>
+      <n-gradient-text type="info"> N.A.D.A </n-gradient-text>
+    </n-space>
+
+    <n-space class="align-right">
+      <n-switch
+        v-model:value="dark"
+        @update:value="updateTheme"
+        class="theme-switch"
+      >
+        <template #checked><mdi-sun /></template>
+        <template #unchecked><mdi-moon /></template>
+      </n-switch>
+    </n-space>
+  </n-space>
 </template>
 <script lang="ts">
   import { mapMutations } from 'vuex'
@@ -27,3 +37,16 @@
     },
   }
 </script>
+<style lang="scss" scoped>
+  .nada-bar {
+    padding: 10px;
+    width: 100%;
+  }
+  .align-right {
+    position: absolute;
+    right: 20px;
+  }
+  .theme-switch {
+    float: right;
+  }
+</style>

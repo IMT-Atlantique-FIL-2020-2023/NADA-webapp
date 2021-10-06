@@ -15,6 +15,7 @@ body,
 
 .nada-content {
   height: 100% !important;
+  margin-top: 10px;
 }
 
 .nada-split {
@@ -22,9 +23,6 @@ body,
 }
 
 .nada-header {
-}
-
-.nada-bar {
 }
 
 .nada-footer {

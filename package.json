@@ -14,6 +14,7 @@
     "*": "prettier -w -u"
   },
   "dependencies": {
+    "@ag-grid-community/client-side-row-model": "^26.1.0",
     "@ag-grid-community/vue3": "^26.1.0",
     "@intlify/vite-plugin-vue-i18n": "^2.4.0",
     "@mdi/font": "5.9.55",
