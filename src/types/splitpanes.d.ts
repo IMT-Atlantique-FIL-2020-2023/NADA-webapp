@@ -1,10 +1,3 @@
-// Type definitions for splitPanes 2.2
-// Project: https://github.com/antoniandre/splitpanes
-// Definitions by: n0k0 <https://github.com/n0k0>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// TypeScript Version: 3.5
-import { VueConstructor } from 'vue'
-
 // Misc
 export interface ContainerType {
   vnode: any
@@ -145,7 +138,7 @@ export interface SplitpaneWatch {
   dblClickSplitter: (enable: boolean) => void
 }
 
-export interface Splitpanes extends VueConstructor {
+export interface Splitpanes {
   props: SplitpaneProps
   data: () => SplitpaneData
   computed: SplitpaneComputed
@@ -183,7 +176,7 @@ export interface PaneWatch {
   maxSizeNumber: (max: number) => void
 }
 
-export interface Pane extends VueConstructor {
+export interface Pane {
   props: PaneProps
   data: () => PaneData
   methods: PaneMethods

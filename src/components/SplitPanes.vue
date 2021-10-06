@@ -14,6 +14,7 @@
 <script lang="ts">
   import { Splitpanes, Pane } from 'splitpanes'
   import 'splitpanes/dist/splitpanes.css'
+
   export default {
     name: 'SplitPane',
     components: { Splitpanes, Pane },
@@ -27,8 +28,8 @@
       },
     },
     methods: {
-      Resizing(event): void {
-        this.paneSize = event[0].size
+      Resizing(event: Event): void {
+        // this.paneSize = event[0].size
         this.onResize()
       },
     },
