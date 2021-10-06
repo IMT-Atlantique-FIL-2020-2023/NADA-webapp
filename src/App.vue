@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider :theme="$store.common.state.theme">
+  <n-config-provider :theme="$store">
     <n-layout-header>
       <app-bar></app-bar>
     </n-layout-header>
@@ -21,6 +21,9 @@
     components: {
       AppBar,
       AppFooter,
+    },
+    mounted() {
+      console.log(this.$store)
     },
   }
 </script>
