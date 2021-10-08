@@ -1,6 +1,9 @@
 <template>
   <ag-grid-vue
-    class="ag-theme-material"
+    :class="{
+      'ag-theme-alpine': !isThemeDark(),
+      'ag-theme-alpine-dark': isThemeDark(),
+    }"
     dom-layout="autoHeight"
     :column-defs="columnDefs"
     :row-data="rowData"
@@ -12,7 +15,8 @@
 </template>
 <script lang="ts">
   import '@ag-grid-community/core/dist/styles/ag-grid.css'
-  import '@ag-grid-community/core/dist/styles/ag-theme-material.css'
+  import '@ag-grid-community/core/dist/styles/ag-theme-alpine.css'
+  import '@ag-grid-community/core/dist/styles/ag-theme-alpine-dark.css'
 
   import { AgGridVue } from '@ag-grid-community/vue3'
   import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model'
@@ -36,6 +40,9 @@
       }
     },
     methods: {
+      isThemeDark(): boolean {
+        return this.$store.state.common.theme !== null
+      },
       sizeColumnsToFit(params: any): void {
         params.api.sizeColumnsToFit()
       },

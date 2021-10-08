@@ -39,6 +39,5 @@
 <style lang="scss" scoped>
   .nada-subbar {
     padding: 20px;
-    background-color: red;
   }
 </style>

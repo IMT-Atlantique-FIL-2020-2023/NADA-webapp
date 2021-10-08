@@ -7,8 +7,8 @@
     <n-space class="align-right">
       <n-switch
         v-model:value="dark"
-        @update:value="updateTheme"
         class="theme-switch"
+        @update:value="updateTheme"
       >
         <template #checked><mdi-sun /></template>
         <template #unchecked><mdi-moon /></template>
