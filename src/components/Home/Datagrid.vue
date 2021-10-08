@@ -1,24 +1,33 @@
 <template>
   <ag-grid-vue
-    style="width: 500px; height: 500px"
-    :columnDefs="columnDefs"
-    :rowData="rowData"
+    class="ag-theme-material"
+    dom-layout="autoHeight"
+    :column-defs="columnDefs"
+    :row-data="rowData"
     :modules="modules"
+    @first-data-rendered="sizeColumnsToFit"
+    @grid-size-changed="sizeColumnsToFit"
   >
   </ag-grid-vue>
 </template>
 <script lang="ts">
   import '@ag-grid-community/core/dist/styles/ag-grid.css'
-  import '@ag-grid-community/core/dist/styles/ag-theme-alpine.css'
+  import '@ag-grid-community/core/dist/styles/ag-theme-material.css'
+
   import { AgGridVue } from '@ag-grid-community/vue3'
   import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model'
 
   export default {
     name: 'Datagrid',
+    components: { AgGridVue },
     data() {
       return {
         modules: [ClientSideRowModelModule],
-        columnDefs: [{ field: 'make' }, { field: 'model' }, { field: 'price' }],
+        columnDefs: [
+          { field: 'make', minWidth: 200 },
+          { field: 'model' },
+          { field: 'price' },
+        ],
         rowData: [
           { make: 'Toyota', model: 'Celica', price: 35000 },
           { make: 'Ford', model: 'Mondeo', price: 32000 },
@@ -26,8 +35,11 @@
         ],
       }
     },
-    components: {
-      AgGridVue,
+    methods: {
+      sizeColumnsToFit(params: any): void {
+        params.api.sizeColumnsToFit()
+      },
     },
   }
 </script>
+<style lang="scss"></style>
