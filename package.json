@@ -6,7 +6,8 @@
     "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore .",
     "serve": "vite preview",
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "mock:api": "npx -y graphql-faker --port 9002 ./schema.graphql"
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint --fix",
@@ -16,8 +17,10 @@
   "dependencies": {
     "@ag-grid-community/client-side-row-model": "^26.1.0",
     "@ag-grid-community/vue3": "^26.1.0",
+    "@apollo/client": "^3.4.16",
     "@intlify/vite-plugin-vue-i18n": "^2.4.0",
     "@mdi/font": "5.9.55",
+    "@vue/apollo-option": "^4.0.0-alpha.15",
     "roboto-fontface": "*",
     "splitpanes": "^3.0.6",
     "vue": "^3.2.6",

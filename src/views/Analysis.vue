@@ -3,11 +3,7 @@
     <sub-bar></sub-bar>
 
     <div class="nada-split">
-      <split-panes
-        :side="panesSide"
-        :horizontal="false"
-        @resized="panesResized"
-      >
+      <split-panes :side="50" :horizontal="false">
         <template #left>
           <div class="nada-fullheight">
             <interval></interval>
@@ -41,20 +37,6 @@
       Datagrid,
       Graphs,
       SubBar,
-    },
-    data() {
-      return {
-        panesSide: 50,
-      }
-    },
-    methods: {
-      panesResized(event: Array<PaneResized>): void {
-        console.log(event)
-        console.log(this.panesSide)
-        if (event[0].size != null && event[0].size < 10) {
-          this.panesSide = 0
-        }
-      },
     },
   }
 </script>

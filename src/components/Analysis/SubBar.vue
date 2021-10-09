@@ -3,10 +3,10 @@
     <n-form inline label-placement="left">
       <n-form-item label="Aéroport">
         <n-select
-          v-model:value="selectedValue"
+          v-model:value="$store.state.analysis.aeroport"
+          :options="$store.state.analysis.aeroports"
           filterable
-          placeholder="selectionner un aéroport"
-          :options="options"
+          placeholder="selectionnez un aéroport"
         />
       </n-form-item>
       <n-form-item>
@@ -23,17 +23,6 @@
   export default {
     name: 'SubBar',
     components: { mdiMap },
-    data() {
-      return {
-        selectedValue: null,
-        options: [
-          {
-            label: 'Charle De Gaule',
-            value: 'cdg',
-          },
-        ],
-      }
-    },
   }
 </script>
 <style lang="scss" scoped>

@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <apexchart
-      width="100%"
-      height="300px"
-      type="bar"
-      :options="chartOptions"
-      :series="series"
-    ></apexchart>
-  </div>
+  <apexchart
+    width="100%"
+    height="300px"
+    type="bar"
+    :options="chartOptions"
+    :series="series"
+  ></apexchart>
 </template>
 <script lang="ts">
   import VueApexCharts from 'vue3-apexcharts'
@@ -21,7 +19,7 @@
       return {
         chartOptions: {
           chart: {
-            id: 'vuechart-example',
+            id: 'timeline',
           },
           xaxis: {
             categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],

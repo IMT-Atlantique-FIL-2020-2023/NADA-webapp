@@ -1,0 +1,207 @@
+# Examples :
+# {
+#   airports {
+#     id
+#     name
+#     sensors {
+#       id
+#       measurement {
+#         id
+#         name
+#         unit
+#       }
+#       getMeanMeasureInterval(
+#         start: "2021-03-15 23:20:47.367000000"
+#         end: "2022-03-04 17:02:18.325000000"
+#         discretize: 24
+#         discretizeMode: PER_DAY
+#       ) {
+#         id
+#         value
+#         startDate
+#         endDate
+#       }
+#     }
+#   }
+# }
+
+"""
+Scalar defined by gqlgen
+"""
+scalar Time
+  @fake(type: date, options: { dateFormat: "YYYY-MM-DDTHH:mm:ss.SSSSSSSSSZ" })
+
+schema {
+  query: Query
+}
+
+interface Node {
+  id: ID!
+}
+
+type Query {
+  """
+  List every airport available.
+  """
+  airports: [Airport!]!
+
+  """
+  Get an airport by his IATA airport code
+  """
+  getAirportById(
+    """
+    IATA airport code
+    """
+    id: ID!
+  ): Airport
+}
+"""
+Represents an airport
+"""
+type Airport implements Node {
+  """
+  IATA airport code
+  """
+  id: ID! @examples(values: ["NTGA", "NTE", "YARY"])
+
+  """
+  Airport literal name
+  """
+  name: String! @fake(locale: fr, type: city)
+
+  """
+  List of available sensors for this airport
+  """
+  sensors: [Sensor!]! @listLength(min: 2, max: 2)
+
+  """
+  Get mean measures for a specific day, for each sensor available.
+  For example, if this airport has 8 sensors, you will get 8 mean values for the day specified
+  """
+  getMeanMeasures(
+    """
+    Mean values will be calculated for the day specified
+    """
+    day: Time
+  ): [MeasureMeanData!]! @listLength(min: 2, max: 2)
+
+  """
+  Get a subset of sensors
+  """
+  getSubsetOfSensors(
+    """
+    Ids of sensors to get
+    """
+    sensorIds: [ID!]!
+  ): [Sensor!]! @listLength(min: 1, max: 2)
+}
+
+type Measurement implements Node {
+  """
+  Measurement id
+  """
+  id: ID! @examples(values: ["temperature", "wind"])
+
+  """
+  Measurement name
+  """
+  name: String! @examples(values: ["Température", "Vitesse du vent"])
+
+  """
+  Measurement unit
+  """
+  unit: String! @examples(values: ["°C", "m/s"])
+}
+
+type Sensor implements Node {
+  """
+  Sensor id
+  """
+  id: ID! @examples(values: ["T001", "W001"])
+
+  """
+  Type of measurement that provides this sensor
+  """
+  measurement: Measurement!
+
+  """
+  Get a serie of mean measures for this sensor
+  """
+  getMeanMeasureInterval(
+    """
+    Data captured before this date will be not included.
+    Note: start < end
+    """
+    start: Time!
+    """
+    Data captured after this date will be not included.
+    Note: start < end
+    """
+    end: Time!
+
+    """
+    Specify the number of measures to obtain
+    """
+    discretize: Int
+
+    """
+    Specify discretize argument behaviour
+    """
+    discretizeMode: MeanMeasureMode
+  ): [MeasureMeanData!]! @listLength(min: 5, max: 15)
+}
+
+enum MeanMeasureMode {
+  """
+  The value specified by discretize will divide in X MeasureMeanData for one day
+  """
+  PER_DAY
+
+  """
+  The value specified by discretize will divide in X MeasureMeanData for the whole interval
+  """
+  FOR_INTERVAL
+}
+
+type MeasureMeanData implements Node {
+  """
+  Measure id
+  """
+  id: ID! @fake(type: uuid)
+
+  """
+  Sensor used to capture this measure
+  """
+  sensor: Sensor!
+
+  """
+  Measure airport location
+  """
+  airport: Airport!
+
+  """
+  Measure value
+  """
+  value: Float!
+    @fake(
+      type: number
+      options: { minNumber: -10, maxNumber: 30, precisionNumber: 0.01 }
+    )
+
+  """
+  Start date of mean calculation
+  """
+  startDate: Time!
+    @fake(
+      type: pastDate
+      options: { dateFormat: "YYYY-MM-DDTHH:mm:ss.SSSSSSSSSZ" }
+    )
+  """
+  End date of mean calculation
+  """
+  endDate: Time!
+    @fake(
+      type: futureDate
+      options: { dateFormat: "YYYY-MM-DDTHH:mm:ss.SSSSSSSSSZ" }
+    )
+}
