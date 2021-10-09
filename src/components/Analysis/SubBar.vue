@@ -1,5 +1,5 @@
 <template>
-  <n-spacer class="nada-subbar">
+  <n-space class="nada-subbar">
     <n-form inline label-placement="left">
       <n-form-item label="Aéroport">
         <n-select
@@ -15,7 +15,7 @@
         </n-button>
       </n-form-item>
     </n-form>
-  </n-spacer>
+  </n-space>
 </template>
 <script lang="ts">
   import mdiMap from '~icons/mdi/map'
@@ -38,6 +38,6 @@
 </script>
 <style lang="scss" scoped>
   .nada-subbar {
-    padding: 20px;
+    padding: 0px 20px;
   }
 </style>

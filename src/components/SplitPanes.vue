@@ -1,7 +1,12 @@
 <template>
   <div class="split-container">
-    <splitpanes class="default-theme" @resize="Resizing">
-      <pane :size="side">
+    <splitpanes
+      class="default-theme"
+      :horizontal="horizontal"
+      @resize="resize"
+      @resized="resized"
+    >
+      <pane :size="size">
         <slot name="left"></slot>
       </pane>
       <pane>
@@ -19,18 +24,25 @@
     name: 'SplitPane',
     components: { Splitpanes, Pane },
     props: {
-      side: { type: Number, default: 50 },
-      onResize: {
-        type: Function,
-        default: (): void => {
-          return
-        },
-      },
+      side: { type: Number, default: null },
+      horizontal: { type: Boolean, default: false },
+      closing: { type: Boolean, default: false },
+    },
+    emits: ['resize', 'resized'],
+    data(): any {
+      return {
+        size: 50,
+      }
+    },
+    mounted(): void {
+      this.size = this.side
     },
     methods: {
-      Resizing(event: Event): void {
-        // this.paneSize = event[0].size
-        this.onResize()
+      resize(event: Event): void {
+        this.$emit('resize', event)
+      },
+      resized(event: Event): void {
+        this.$emit('resized', event)
       },
     },
   }

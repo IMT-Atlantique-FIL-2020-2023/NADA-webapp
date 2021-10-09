@@ -28,6 +28,12 @@ export interface SumsPanesType {
   panesToResize: number[]
 }
 
+export interface PaneResized {
+  min: number | undefined
+  max: number | undefined
+  size: number | undefined
+}
+
 export interface RequestUpdateType {
   target: Pane
   min?: number | undefined
