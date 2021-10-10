@@ -19,10 +19,17 @@
 </template>
 <script lang="ts">
   import mdiMap from '~icons/mdi/map'
+  import { mapActions } from 'vuex'
 
   export default {
     name: 'SubBar',
     components: { mdiMap },
+    mounted(): void {
+      this.fetchAeroports()
+    },
+    methods: {
+      ...mapActions('analysis', ['fetchAeroports']),
+    },
   }
 </script>
 <style lang="scss" scoped>

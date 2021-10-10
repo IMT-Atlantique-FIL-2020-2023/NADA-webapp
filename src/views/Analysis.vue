@@ -27,7 +27,6 @@
   import Interval from '@/components/Analysis/Interval.vue'
   import Timeline from '@/components/Analysis/Timeline.vue'
   import Graphs from '@/components/Analysis/Graphs.vue'
-  import { PaneResized } from '@/types/splitpanes'
   export default {
     name: 'Analysis',
     components: {

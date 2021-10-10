@@ -62,7 +62,7 @@ type Airport implements Node {
   """
   IATA airport code
   """
-  id: ID! @examples(values: ["NTGA", "NTE", "YARY"])
+  id: ID! @examples(values: ["NTGA", "NTE", "YARY", "EURA", "ALY", "ASE"])
 
   """
   Airport literal name
