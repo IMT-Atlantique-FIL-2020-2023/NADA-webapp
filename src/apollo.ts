@@ -2,7 +2,7 @@ import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client/core'
 import { createApolloProvider } from '@vue/apollo-option'
 
 const httpLink = new HttpLink({
-  uri: process.env.NADA_API_URL,
+  uri: `${import.meta.env.VITE_API_URL}`,
 })
 
 // Create the apollo client

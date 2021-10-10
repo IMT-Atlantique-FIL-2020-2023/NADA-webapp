@@ -25,6 +25,7 @@
     name: 'SubBar',
     components: { mdiMap },
     mounted(): void {
+      console.log(import.meta.env.VITE_API_URL)
       this.fetchAeroports()
     },
     methods: {
