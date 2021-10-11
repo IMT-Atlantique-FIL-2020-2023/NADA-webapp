@@ -1,8 +1,8 @@
 export default {
   period: undefined,
   day: false,
-  aeroport: null,
-  aeroports: ['CDG'],
+  airport: null,
+  airports: [],
   measure: null,
-  measures: ['Température'],
+  measures: [],
 }

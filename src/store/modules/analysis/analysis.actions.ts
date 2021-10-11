@@ -4,11 +4,7 @@ import appolo from '@/apollo'
 import gql from 'graphql-tag'
 
 export default <ActionTree<Analysis, any>>{
-  async fetchAeroports(store) {
-    //  let client = this.app.apolloProvider.defaultClient
-    // process.env.VUE_APP_URL,
-    console.log(store)
-
+  async fetchAirports({ dispatch, commit }) {
     const request = await appolo.defaultClient.query({
       query: gql(`
             {
@@ -18,6 +14,18 @@ export default <ActionTree<Analysis, any>>{
                 }
             }`),
     })
-    store.state.aeroports = request.data.airports
+    commit('setAirports', request.data.airports)
+    dispatch('selectAirportDefault')
+  },
+  selectAirportDefault({ commit, state }) {
+    if (state.airports.length) {
+      commit('setAirport', state.airports[0])
+    }
+  },
+  selectAirportById({ commit, state }, id) {
+    const airport = state.airports.find((e) => {
+      e.id = id
+    })
+    commit('setAirport', airport)
   },
 }

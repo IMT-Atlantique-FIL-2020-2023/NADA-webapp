@@ -1,10 +1,10 @@
-interface Aeroport {
+interface Airport {
   id: string
   name: string | undefined
 }
 
-interface Mesure {
+interface Measure {
   name: string
 }
 
-export { Aeroport, Mesure }
+export { Airport, Measure }

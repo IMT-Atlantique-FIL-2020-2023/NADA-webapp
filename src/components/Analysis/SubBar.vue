@@ -4,7 +4,7 @@
       <n-form-item label="Aéroport">
         <n-select
           v-model:value="$store.state.analysis.aeroport"
-          :options="getAeroports"
+          :options="getAirports"
           filterable
           placeholder="selectionnez un aéroport"
         />
@@ -25,14 +25,13 @@
     name: 'SubBar',
     components: { mdiMap },
     computed: {
-      ...mapGetters('analysis', ['getAeroports']),
+      ...mapGetters('analysis', ['getAirports', 'getAirport']),
     },
     mounted(): void {
-      console.log(import.meta.env.VITE_API_URL)
-      this.fetchAeroports()
+      this.fetchAirports()
     },
     methods: {
-      ...mapActions('analysis', ['fetchAeroports']),
+      ...mapActions('analysis', ['fetchAirports', 'selectAirportById']),
     },
   }
 </script>
