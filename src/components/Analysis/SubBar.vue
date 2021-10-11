@@ -4,7 +4,7 @@
       <n-form-item label="Aéroport">
         <n-select
           v-model:value="$store.state.analysis.aeroport"
-          :options="$store.state.analysis.aeroports"
+          :options="getAeroports"
           filterable
           placeholder="selectionnez un aéroport"
         />
@@ -19,11 +19,14 @@
 </template>
 <script lang="ts">
   import mdiMap from '~icons/mdi/map'
-  import { mapActions } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
 
   export default {
     name: 'SubBar',
     components: { mdiMap },
+    computed: {
+      ...mapGetters('analysis', ['getAeroports']),
+    },
     mounted(): void {
       console.log(import.meta.env.VITE_API_URL)
       this.fetchAeroports()

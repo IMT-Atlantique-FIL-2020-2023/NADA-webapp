@@ -9,19 +9,15 @@ export default <ActionTree<Analysis, any>>{
     // process.env.VUE_APP_URL,
     console.log(store)
 
-    await appolo.defaultClient
-      .query({
-        query: gql(`
+    const request = await appolo.defaultClient.query({
+      query: gql(`
             {
                 airports {
                     id
                     name
                 }
             }`),
-      })
-      .then((e) => {
-        console.log(e)
-      })
-    // store.state.aeroports =
+    })
+    store.state.aeroports = request.data.airports
   },
 }

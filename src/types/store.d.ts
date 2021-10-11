@@ -1,3 +1,5 @@
+import { Aeroport, Mesure } from '@/types/analysis'
+
 interface Common {
   theme: any
 }
@@ -5,10 +7,10 @@ interface Common {
 interface Analysis {
   period: Array<Date>
   day: boolean
-  aeroport: string
-  aeroports: Array<string>
-  measure: string
-  measures: Array<string>
+  aeroport: Aeroport
+  aeroports: Array<Aeroport>
+  measure: Mesure
+  measures: Array<Mesure>
 }
 
 interface State {
