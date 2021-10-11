@@ -3,6 +3,7 @@ export default {
   day: false,
   airport: null,
   airports: [],
-  measure: null,
-  measures: [],
+  sensor: null,
+  sensors: [],
+  timeline: [],
 }

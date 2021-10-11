@@ -3,10 +3,11 @@
     <n-form inline label-placement="left">
       <n-form-item label="Aéroport">
         <n-select
-          v-model:value="$store.state.analysis.aeroport"
+          :value="$store.state.analysis.aeroport"
           :options="getAirports"
           filterable
           placeholder="selectionnez un aéroport"
+          @update:value="selectAirport"
         />
       </n-form-item>
       <n-form-item>
@@ -32,6 +33,9 @@
     },
     methods: {
       ...mapActions('analysis', ['fetchAirports', 'selectAirportById']),
+      selectAirport(value: any): void {
+        this.selectAirportById(value)
+      },
     },
   }
 </script>

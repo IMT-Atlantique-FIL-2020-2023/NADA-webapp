@@ -7,4 +7,13 @@ export default <MutationTree<Analysis>>{
   setAirport(state, value) {
     state.airport = value
   },
+  setSensors(state, value) {
+    state.sensors = value
+  },
+  setSensor(state, value) {
+    state.sensor = value
+  },
+  setTimeline(state, value) {
+    state.timeline = value
+  },
 }

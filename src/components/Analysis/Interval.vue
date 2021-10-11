@@ -15,16 +15,27 @@
 
     <n-form-item label="Mesure à afficher">
       <n-select
-        v-model:value="$store.state.analysis.measure"
-        :options="$store.state.analysis.measures"
+        :value="$store.state.analysis.measurement"
+        :options="getMeasurements"
         filterable
         placeholder="selectionnez une mesure"
+        @update:value="selectMeasurement"
       />
     </n-form-item>
   </n-form>
 </template>
 <script lang="ts">
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     name: 'Interval',
+    computed: {
+      ...mapGetters('analysis', ['getMeasurements', 'getMeasurement']),
+    },
+    methods: {
+      ...mapActions('analysis', ['selectSensorByMesureId']),
+      selectMeasurement(value: any): void {
+        this.selectSensorByMesureId(value)
+      },
+    },
   }
 </script>

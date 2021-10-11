@@ -3,8 +3,23 @@ interface Airport {
   name: string | undefined
 }
 
-interface Measure {
-  name: string
+interface Sensor {
+  id: string
+  measurement: Measurement
+  getMeanMeasureInterval: Array<Measure> | undefined
 }
 
-export { Airport, Measure }
+interface Measurement {
+  id: string
+  name: string | undefined
+  unit: string | undefined
+}
+
+interface Measure {
+  id: string | undefined
+  value: number | undefined
+  startDate: Date | undefined
+  endDate: Date | undefined
+}
+
+export { Airport, Sensor, Measurement, Measure }

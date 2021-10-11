@@ -4,47 +4,57 @@
     height="300px"
     type="bar"
     :options="chartOptions"
-    :series="series"
+    :series="getSeries()"
   ></apexchart>
 </template>
 <script lang="ts">
   import VueApexCharts from 'vue3-apexcharts'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'Timeline',
     components: {
       apexchart: VueApexCharts,
     },
-    data() {
+    data(): any {
       return {
         chartOptions: {
           chart: {
             id: 'timeline',
-          },
-          xaxis: {
-            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
-          },
-        },
-        series: [
-          {
-            name: 'series-1',
-            data: [30, 40, 35, 50, 49, 60, 70, 91],
-          },
-        ],
-        animations: {
-          enabled: true,
-          easing: 'easeinout',
-          speed: 800,
-          animateGradually: {
-            enabled: true,
-            delay: 150,
-          },
-          dynamicAnimation: {
-            enabled: true,
-            speed: 350,
+            toolbar: {
+              show: true,
+            },
+            selection: {
+              enabled: true,
+            },
+            animations: {
+              enabled: true,
+              easing: 'easeinout',
+              speed: 800,
+              animateGradually: {
+                enabled: false,
+                delay: 150,
+              },
+              dynamicAnimation: {
+                enabled: true,
+                speed: 450,
+              },
+            },
           },
         },
       }
+    },
+    methods: {
+      ...mapGetters('analysis', ['getTimeline']),
+      getSeries(): any {
+        console.log(this.getTimeline())
+        return [
+          {
+            name: 'timeline',
+            data: this.getTimeline(),
+          },
+        ]
+      },
     },
   }
 </script>

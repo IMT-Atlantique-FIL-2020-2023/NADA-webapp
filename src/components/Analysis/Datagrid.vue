@@ -8,6 +8,9 @@
     :column-defs="columnDefs"
     :row-data="rowData"
     :modules="modules"
+    :default-col-def="defaultColDef"
+    :status-bar="statusBar"
+    :side-bar="sideBar"
     @first-data-rendered="sizeColumnsToFit"
     @grid-size-changed="sizeColumnsToFit"
   >
@@ -37,6 +40,42 @@
           { make: 'Ford', model: 'Mondeo', price: 32000 },
           { make: 'Porsche', model: 'Boxter', price: 72000 },
         ],
+        defaultColDef: {
+          flex: 1,
+          minWidth: 100,
+          filter: true,
+          resizable: true,
+        },
+        statusBar: {
+          statusPanels: [
+            {
+              statusPanel: 'agTotalAndFilteredRowCountComponent',
+              align: 'left',
+            },
+            { statusPanel: 'agTotalRowCountComponent', align: 'center' },
+            { statusPanel: 'agFilteredRowCountComponent' },
+            { statusPanel: 'agSelectedRowCountComponent' },
+            { statusPanel: 'agAggregationComponent' },
+          ],
+        },
+        sideBar: {
+          toolPanels: [
+            {
+              id: 'columns',
+              labelDefault: 'Columns',
+              labelKey: 'columns',
+              iconKey: 'columns',
+              toolPanel: 'agColumnsToolPanel',
+            },
+            {
+              id: 'filters',
+              labelDefault: 'Filters',
+              labelKey: 'filters',
+              iconKey: 'filter',
+              toolPanel: 'agFiltersToolPanel',
+            },
+          ],
+        },
       }
     },
     methods: {
