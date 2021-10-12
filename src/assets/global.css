@@ -1,0 +1,32 @@
+html,
+body,
+#app {
+  height: 100% !important;
+}
+
+.nada-main {
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+.nada-fullheight {
+  height: 100% !important;
+}
+
+.nada-content {
+  height: 100% !important;
+  margin-top: 10px;
+}
+
+.nada-split {
+  height: 100% !important;
+}
+
+.nada-header {
+}
+
+.nada-footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+}

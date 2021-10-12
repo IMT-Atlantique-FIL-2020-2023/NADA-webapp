@@ -1,0 +1,9 @@
+{
+  "client": {
+    "service": {
+      "name": "nada",
+      "url": "http://localhost:9002/graphql"
+    },
+    "includes": ["src/**/*.vue", "src/**/*.js"]
+  }
+}

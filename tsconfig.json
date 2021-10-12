@@ -9,7 +9,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
-    "types": ["vuetify", "@intlify/vite-plugin-vue-i18n/client", "node"],
+    "types": ["node", "unplugin-icons/types/vue"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

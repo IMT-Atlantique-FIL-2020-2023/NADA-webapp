@@ -1,13 +1,10 @@
-import Auth from '../types/authType'
-import { InjectionKey } from 'vue'
-import { createStore, Store } from 'vuex'
-import { AuthStore } from './authStore'
+import { createStore } from 'vuex'
+import common from '@/store/modules/common/common.module'
+import analysis from '@/store/modules/analysis/analysis.module'
 
-interface storeTypes extends Auth {}
-export const key: InjectionKey<Store<storeTypes>> = Symbol()
-
-export const store = createStore<storeTypes>({
+export default createStore({
   modules: {
-    AuthStore,
+    common,
+    analysis,
   },
 })
