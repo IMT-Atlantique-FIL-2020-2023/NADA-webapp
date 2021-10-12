@@ -1,89 +1,53 @@
 <template>
-  <ag-grid-vue
-    :class="{
-      'ag-theme-alpine': !isThemeDark(),
-      'ag-theme-alpine-dark': isThemeDark(),
-    }"
-    dom-layout="autoHeight"
-    :column-defs="columnDefs"
-    :row-data="rowData"
-    :modules="modules"
-    :default-col-def="defaultColDef"
-    :status-bar="statusBar"
-    :side-bar="sideBar"
-    @first-data-rendered="sizeColumnsToFit"
-    @grid-size-changed="sizeColumnsToFit"
-  >
-  </ag-grid-vue>
+  <v-grid
+    :theme="isThemeDark() ? 'darkMaterial' : 'material'"
+    :source="rows"
+    :columns="columns"
+    resize="true"
+  ></v-grid>
 </template>
 <script lang="ts">
-  import '@ag-grid-community/core/dist/styles/ag-grid.css'
-  import '@ag-grid-community/core/dist/styles/ag-theme-alpine.css'
-  import '@ag-grid-community/core/dist/styles/ag-theme-alpine-dark.css'
-
-  import { AgGridVue } from '@ag-grid-community/vue3'
-  import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model'
-
+  import VGrid from '@revolist/vue3-datagrid'
   export default {
     name: 'Datagrid',
-    components: { AgGridVue },
+    components: {
+      VGrid,
+    },
     data() {
       return {
-        modules: [ClientSideRowModelModule],
-        columnDefs: [
-          { field: 'make', minWidth: 200 },
-          { field: 'model' },
-          { field: 'price' },
+        columns: [
+          {
+            name: 'Birth',
+            prop: 'birthdate',
+            columnType: 'date',
+            size: 150,
+          },
+          {
+            prop: 'name',
+            name: 'First',
+          },
+          {
+            prop: 'details',
+            name: 'Second',
+          },
         ],
-        rowData: [
-          { make: 'Toyota', model: 'Celica', price: 35000 },
-          { make: 'Ford', model: 'Mondeo', price: 32000 },
-          { make: 'Porsche', model: 'Boxter', price: 72000 },
+        rows: [
+          {
+            birthdate: '2022-08-24',
+            name: '1',
+            details: 'Item 1',
+          },
+          {
+            birthdate: '2022-08-24',
+            name: '2',
+            details: 'Item 2',
+          },
         ],
-        defaultColDef: {
-          flex: 1,
-          minWidth: 100,
-          filter: true,
-          resizable: true,
-        },
-        statusBar: {
-          statusPanels: [
-            {
-              statusPanel: 'agTotalAndFilteredRowCountComponent',
-              align: 'left',
-            },
-            { statusPanel: 'agTotalRowCountComponent', align: 'center' },
-            { statusPanel: 'agFilteredRowCountComponent' },
-            { statusPanel: 'agSelectedRowCountComponent' },
-            { statusPanel: 'agAggregationComponent' },
-          ],
-        },
-        sideBar: {
-          toolPanels: [
-            {
-              id: 'columns',
-              labelDefault: 'Columns',
-              labelKey: 'columns',
-              iconKey: 'columns',
-              toolPanel: 'agColumnsToolPanel',
-            },
-            {
-              id: 'filters',
-              labelDefault: 'Filters',
-              labelKey: 'filters',
-              iconKey: 'filter',
-              toolPanel: 'agFiltersToolPanel',
-            },
-          ],
-        },
       }
     },
     methods: {
       isThemeDark(): boolean {
         return this.$store.state.common.theme !== null
-      },
-      sizeColumnsToFit(params: any): void {
-        params.api.sizeColumnsToFit()
       },
     },
   }
