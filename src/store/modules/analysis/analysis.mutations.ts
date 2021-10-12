@@ -13,7 +13,4 @@ export default <MutationTree<Analysis>>{
   setSensor(state, value) {
     state.sensor = value
   },
-  setTimeline(state, value) {
-    state.timeline = value
-  },
 }

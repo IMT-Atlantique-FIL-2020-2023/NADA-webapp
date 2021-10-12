@@ -11,7 +11,6 @@ interface Analysis {
   airports: Array<Airport>
   sensor: Sensor
   sensors: Array<Sensor>
-  timeline: Array<Measure>
 }
 
 interface State {

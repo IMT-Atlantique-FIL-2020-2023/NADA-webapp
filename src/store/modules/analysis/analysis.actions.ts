@@ -45,6 +45,12 @@ export default <ActionTree<Analysis, any>>{
                         name
                         unit
                     }
+                    getMeanMeasureInterval(start: "2021-03-15 23:20:47.367000000", end: "2022-03-04 17:02:18.325000000", discretize: 24, discretizeMode: PER_DAY) {
+                        id
+                        value
+                        startDate
+                        endDate
+                    }
                 }
             }
         }`
@@ -57,39 +63,5 @@ export default <ActionTree<Analysis, any>>{
       return e.measurement.id === id
     })
     commit('setSensor', sensor)
-    dispatch('fetchTimeline')
-  },
-  async fetchTimeline({ commit, state }) {
-    if (state.airport == null) return
-    if (state.sensor == null) return
-
-    const request = await appolo.defaultClient.query({
-      query: gql(
-        `{
-            getAirportById(id: "${state.airport.id}") {
-                id
-                name
-                getSubsetOfSensors(sensorIds: ["${state.sensor.id}"]) {
-                    id
-                    measurement {
-                        id
-                        name
-                        unit
-                    }
-                    getMeanMeasureInterval(start: "2021-03-15 23:20:47.367000000", end: "2022-03-04 17:02:18.325000000", discretize: 24, discretizeMode: PER_DAY) {
-                        id
-                        value
-                        startDate
-                        endDate
-                    }
-                }
-            }
-        }`
-      ),
-    })
-    commit(
-      'setTimeline',
-      request.data.getAirportById.getSubsetOfSensors[0].getMeanMeasureInterval
-    )
   },
 }

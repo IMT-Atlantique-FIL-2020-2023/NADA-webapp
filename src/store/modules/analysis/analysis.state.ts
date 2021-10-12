@@ -5,5 +5,4 @@ export default {
   airports: [],
   sensor: null,
   sensors: [],
-  timeline: [],
 }

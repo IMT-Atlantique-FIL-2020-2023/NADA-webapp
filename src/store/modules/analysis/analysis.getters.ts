@@ -26,7 +26,15 @@ export default <GetterTree<Analysis, any>>{
     }
   },
   getTimeline(state) {
-    return state.timeline.map((e) => {
+    if (state.sensor == null) return []
+
+    const sensor = state.sensors.find((e: any) => {
+      return e.id === state.sensor.id
+    })
+
+    if (sensor?.getMeanMeasureInterval == null) return []
+
+    return sensor.getMeanMeasureInterval.map((e) => {
       const stringDate = e.startDate == null ? '' : e.startDate
       const startDate = new Date(stringDate).getMilliseconds()
       return [startDate, e.value]

@@ -47,7 +47,6 @@
     methods: {
       ...mapGetters('analysis', ['getTimeline']),
       getSeries(): any {
-        console.log(this.getTimeline())
         return [
           {
             name: 'timeline',
