@@ -3,7 +3,7 @@
     <n-form inline label-placement="left">
       <n-form-item label="Aéroport">
         <n-select
-          :value="$store.state.analysis.aeroport"
+          :value="getAirportId"
           :options="getAirports"
           filterable
           placeholder="selectionnez un aéroport"
@@ -26,7 +26,7 @@
     name: 'SubBar',
     components: { mdiMap },
     computed: {
-      ...mapGetters('analysis', ['getAirports', 'getAirport']),
+      ...mapGetters('analysis', ['getAirports', 'getAirport', 'getAirportId']),
     },
     mounted(): void {
       this.fetchAirports()

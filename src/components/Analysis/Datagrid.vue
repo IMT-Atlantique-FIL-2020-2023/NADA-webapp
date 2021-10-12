@@ -1,13 +1,16 @@
 <template>
   <v-grid
     :theme="isThemeDark() ? 'darkMaterial' : 'material'"
-    :source="rows"
     :columns="columns"
-    resize="true"
+    :grouping="grouping"
+    :source="getData()"
+    :filter="true"
+    :auto-size-column="autosize"
   ></v-grid>
 </template>
 <script lang="ts">
   import VGrid from '@revolist/vue3-datagrid'
+  import { mapGetters } from 'vuex'
   export default {
     name: 'Datagrid',
     components: {
@@ -17,35 +20,54 @@
       return {
         columns: [
           {
-            name: 'Birth',
-            prop: 'birthdate',
-            columnType: 'date',
+            name: 'ID',
+            prop: 'id',
             size: 150,
+            sortable: true,
+          },
+          {
+            prop: 'startDate',
+            name: 'startDate',
+            columnType: 'date',
+            sortable: true,
+            order: 'asc',
+          },
+          {
+            prop: 'endDate',
+            name: 'endDate',
+            columnType: 'date',
+            sortable: true,
+          },
+          {
+            prop: 'mesure',
+            name: 'mesure',
+            sortable: true,
           },
           {
             prop: 'name',
-            name: 'First',
+            name: 'name',
+            sortable: true,
           },
           {
-            prop: 'details',
-            name: 'Second',
+            prop: 'unit',
+            name: 'unit',
+            sortable: true,
+          },
+          {
+            prop: 'value',
+            name: 'value',
+            sortable: true,
           },
         ],
-        rows: [
-          {
-            birthdate: '2022-08-24',
-            name: '1',
-            details: 'Item 1',
-          },
-          {
-            birthdate: '2022-08-24',
-            name: '2',
-            details: 'Item 2',
-          },
-        ],
+        grouping: { props: ['mesure'], expandedAll: true },
+        autosize: {
+          mode: 'headerClickAutosize ',
+          allColumns: true,
+        },
       }
     },
     methods: {
+      ...mapGetters('analysis', ['getData']),
       isThemeDark(): boolean {
         return this.$store.state.common.theme !== null
       },

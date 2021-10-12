@@ -1,5 +1,5 @@
 export default {
-  period: undefined,
+  period: [new Date(), new Date()],
   day: false,
   airport: null,
   airports: [],

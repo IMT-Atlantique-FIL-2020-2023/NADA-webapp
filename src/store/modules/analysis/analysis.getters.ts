@@ -1,5 +1,6 @@
 import { GetterTree } from 'vuex'
 import { Analysis } from '@/types/store'
+import { Sensor } from '@/types/analysis'
 export default <GetterTree<Analysis, any>>{
   getAirports(state) {
     return state.airports.map((e: any) => ({
@@ -9,9 +10,12 @@ export default <GetterTree<Analysis, any>>{
   },
   getAirport(state) {
     return {
-      label: state.airport.name,
-      value: state.airport.id,
+      label: state.airport?.name,
+      value: state.airport?.id,
     }
+  },
+  getAirportId(state) {
+    return state.airport?.id
   },
   getMeasurements(state) {
     return state.sensors.map((e: any) => ({
@@ -21,9 +25,12 @@ export default <GetterTree<Analysis, any>>{
   },
   getMeasurement(state) {
     return {
-      label: state.sensor.measurement.name,
-      value: state.sensor.measurement.id,
+      label: state.sensor?.measurement.name,
+      value: state.sensor?.measurement.id,
     }
+  },
+  getMeasurementId(state) {
+    return state.sensor?.measurement.id
   },
   getTimeline(state) {
     if (state.sensor == null) return []
@@ -39,5 +46,24 @@ export default <GetterTree<Analysis, any>>{
       const startDate = new Date(stringDate).getMilliseconds()
       return [startDate, e.value]
     })
+  },
+  getData(state) {
+    return state.sensors
+      .map((e: Sensor) => {
+        if (e.getMeanMeasureInterval == null) return []
+        const m = e.measurement
+        return e.getMeanMeasureInterval.map((s) => {
+          return {
+            id: s.id,
+            startDate: s.startDate,
+            endDate: s.endDate,
+            value: s.value,
+            mesure: m.id,
+            name: m.name,
+            unit: m.unit,
+          }
+        })
+      })
+      .flat()
   },
 }

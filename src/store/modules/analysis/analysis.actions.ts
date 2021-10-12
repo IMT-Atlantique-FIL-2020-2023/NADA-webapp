@@ -5,17 +5,44 @@ import gql from 'graphql-tag'
 
 export default <ActionTree<Analysis, any>>{
   async fetchAirports({ dispatch, commit }) {
-    const request = await appolo.defaultClient.query({
-      query: gql(`
-            {
-                airports {
+    // fetching airports datas
+    let request = await dispatch(
+      'common/appoloRequest',
+      {
+        query: `{
+              airports {
                     id
                     name
                 }
-            }`),
-    })
+            }`,
+        error:
+          'An error occured during the fetching of the airports. Retrying in 10 seconds...',
+      },
+      { root: true }
+    )
+
+    // Retrying loop
+    while (request == null) {
+      await new Promise((resolve) => setTimeout(resolve, 10000))
+      request = await dispatch(
+        'common/appoloRequest',
+        {
+          query: `{
+              airports {
+                    id
+                    name
+                }
+            }`,
+          error:
+            'An error occured during the fetching of the airports. Retrying in 10 seconds...',
+        },
+        { root: true }
+      )
+    }
+
+    // setup store values and default selection
     commit('setAirports', request.data.airports)
-    dispatch('selectAirportDefault')
+    dispatch('selectAirportById', request.data.airports[0].id)
   },
   selectAirportDefault({ dispatch, state }) {
     if (state.airports.length) {
@@ -29,12 +56,15 @@ export default <ActionTree<Analysis, any>>{
     commit('setAirport', airport)
     dispatch('fetchSensors')
   },
-  async fetchSensors({ commit, state }) {
+  async fetchSensors({ commit, dispatch, state }) {
     if (state.airport == null) return
+    if (state.period == null || !state.period?.length) return
 
-    const request = await appolo.defaultClient.query({
-      query: gql(
-        `{
+    // fetching sensors datas
+    const request = await dispatch(
+      'common/appoloRequest',
+      {
+        query: `{
             getAirportById(id: "${state.airport.id}") {
                 name
                 id
@@ -45,7 +75,7 @@ export default <ActionTree<Analysis, any>>{
                         name
                         unit
                     }
-                    getMeanMeasureInterval(start: "2021-03-15 23:20:47.367000000", end: "2022-03-04 17:02:18.325000000", discretize: 24, discretizeMode: PER_DAY) {
+                    getMeanMeasureInterval(start: "${state.period[0]}", end: "${state.period[1]}", discretize: 24, discretizeMode: PER_DAY) {
                         id
                         value
                         startDate
@@ -53,10 +83,16 @@ export default <ActionTree<Analysis, any>>{
                     }
                 }
             }
-        }`
-      ),
-    })
+        }`,
+        error: 'An error occured during the fetching of the sensors.',
+      },
+      { root: true }
+    )
+    if (request == null) return
+
+    // setup store values and default selection
     commit('setSensors', request.data.getAirportById.sensors)
+    commit('setSensor', request.data.getAirportById.sensors[0])
   },
   selectSensorByMesureId({ dispatch, commit, state }, id) {
     const sensor = state.sensors.find((e) => {

@@ -5,7 +5,7 @@
         v-model:value="$store.state.analysis.period"
         type="daterange"
         :update-value-on-close="true"
-        clearable
+        @update:value="fetchSensors()"
       />
     </n-form-item>
 
@@ -15,7 +15,7 @@
 
     <n-form-item label="Mesure à afficher">
       <n-select
-        :value="$store.state.analysis.measurement"
+        :value="getMeasurementId"
         :options="getMeasurements"
         filterable
         placeholder="selectionnez une mesure"
@@ -29,10 +29,14 @@
   export default {
     name: 'Interval',
     computed: {
-      ...mapGetters('analysis', ['getMeasurements', 'getMeasurement']),
+      ...mapGetters('analysis', [
+        'getMeasurements',
+        'getMeasurement',
+        'getMeasurementId',
+      ]),
     },
     methods: {
-      ...mapActions('analysis', ['selectSensorByMesureId']),
+      ...mapActions('analysis', ['selectSensorByMesureId', 'fetchSensors']),
       selectMeasurement(value: any): void {
         this.selectSensorByMesureId(value)
       },
