@@ -23,12 +23,42 @@ body,
 }
 
 .nada-header {
+  background-color: #2080f0;
+  color: #f3f2fb;
+  font-weight: bold;
+  font-size: 1.2em;
+  transition: color 0.3s ease;
+}
+.nada-header:after {
+  position: absolute;
+  opacity: 0;
+  top: -100px;
+  left: 80px;
+  font-weight: normal;
+  font-style: italic;
+  font-size: 0.9em;
+  content: '"La météo qu\'il vous faut"';
+  transition: top 1.4s ease-in-out, opacity 0.6s ease-in-out;
+}
+
+.nada-header:hover {
+  color: #c9c6e4;
+}
+.nada-header:hover::after {
+  transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  opacity: 1;
+  top: 15px;
 }
 
 .nada-footer {
   position: fixed;
   bottom: 0px;
   width: 100%;
+  background-color: #2080f0;
+  color: white;
+  font-weight: bold;
+  z-index: 100;
+  text-align: center;
 }
 
 .align-right {
