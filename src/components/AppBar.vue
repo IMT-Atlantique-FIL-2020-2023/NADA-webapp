@@ -42,10 +42,6 @@
     padding: 10px;
     width: 100%;
   }
-  .align-right {
-    position: absolute;
-    right: 20px;
-  }
   .theme-switch {
     float: right;
   }

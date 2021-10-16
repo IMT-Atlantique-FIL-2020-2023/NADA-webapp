@@ -1,9 +1,12 @@
 <template>
   <div>
     <sub-bar></sub-bar>
-
     <div class="nada-split">
-      <split-panes :side="50" :horizontal="false">
+      <split-panes
+        :side="50"
+        :horizontal="$store.state.analysis.layout == 'v'"
+        @resized="resized"
+      >
         <template #left>
           <div class="nada-fullheight">
             <interval></interval>
@@ -36,6 +39,27 @@
       Datagrid,
       Graphs,
       SubBar,
+    },
+    watch: {
+      '$store.state.analysis.layout'(): any {
+        this.resized()
+      },
+    },
+    mounted(): void {
+      window.addEventListener('resize', this.onResize)
+    },
+    unmounted(): void {
+      window.removeEventListener('resize', this.onResize)
+    },
+    methods: {
+      resized(): void {
+        this.$store.state.common.resized = new Date()
+      },
+      onResize(): void {
+        if (window.innerHeight < 800) {
+          this.$store.state.analysis.layout = 'v'
+        }
+      },
     },
   }
 </script>

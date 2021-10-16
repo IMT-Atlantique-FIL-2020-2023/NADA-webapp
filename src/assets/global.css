@@ -30,3 +30,8 @@ body,
   bottom: 0px;
   width: 100%;
 }
+
+.align-right {
+  position: absolute;
+  right: 20px;
+}

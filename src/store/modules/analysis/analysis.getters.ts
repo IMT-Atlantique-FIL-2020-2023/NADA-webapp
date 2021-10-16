@@ -36,14 +36,14 @@ export default <GetterTree<Analysis, any>>{
     if (state.sensor == null) return []
 
     const sensor = state.sensors.find((e: any) => {
-      return e.id === state.sensor.id
+      return e.id === state.sensor?.id
     })
 
     if (sensor?.getMeanMeasureInterval == null) return []
 
     return sensor.getMeanMeasureInterval.map((e) => {
       const stringDate = e.startDate == null ? '' : e.startDate
-      const startDate = new Date(stringDate).getMilliseconds()
+      const startDate = new Date(stringDate).getTime()
       return [startDate, e.value]
     })
   },
@@ -65,5 +65,16 @@ export default <GetterTree<Analysis, any>>{
         })
       })
       .flat()
+  },
+  getSelectedData(state, getters) {
+    if (!state.selection.length) {
+      return getters.getData
+    }
+    return getters.getData.filter((e: any) => {
+      return (
+        new Date(e.startDate) >= new Date(state.selection[0]) &&
+        new Date(e.startDate) <= new Date(state.selection[1])
+      )
+    })
   },
 }
