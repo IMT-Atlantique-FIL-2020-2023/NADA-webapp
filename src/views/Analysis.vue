@@ -8,14 +8,14 @@
         @resized="resized"
       >
         <template #left>
-          <div class="nada-fullheight">
+          <div class="nada-pane">
             <interval></interval>
             <timeline></timeline>
             <datagrid></datagrid>
           </div>
         </template>
         <template #right>
-          <div>
+          <div class="nada-pane">
             <graphs></graphs>
           </div>
         </template>

@@ -6,6 +6,7 @@
     :source="getSelectedData()"
     :filter="false"
     :auto-size-column="autosize"
+    style="height: calc(100% - 350px)"
   ></v-grid>
 </template>
 <script lang="ts">

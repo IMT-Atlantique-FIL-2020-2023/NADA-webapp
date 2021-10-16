@@ -22,6 +22,12 @@ body,
   height: 100% !important;
 }
 
+.nada-pane {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+}
+
 .nada-header {
   background-color: #2080f0;
   color: #f3f2fb;
@@ -29,6 +35,7 @@ body,
   font-size: 1.2em;
   transition: color 0.3s ease;
 }
+
 .nada-header:after {
   position: absolute;
   opacity: 0;
@@ -44,6 +51,7 @@ body,
 .nada-header:hover {
   color: #c9c6e4;
 }
+
 .nada-header:hover::after {
   transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
   opacity: 1;
