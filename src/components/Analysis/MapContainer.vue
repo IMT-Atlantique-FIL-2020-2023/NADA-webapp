@@ -13,9 +13,8 @@
     <ol-interaction-select @select="selection"></ol-interaction-select>
     <ol-vector-layer>
       <ol-source-vector>
-        <ol-feature>
-          <ol-geom-multi-point :coordinates="getCoordinates">
-          </ol-geom-multi-point>
+        <ol-feature v-for="(point, i) in coordinates" :key="i">
+          <ol-geom-point :coordinates="point.coordinates"></ol-geom-point>
           <ol-style>
             <ol-style-icon
               :src="marker"
@@ -23,9 +22,9 @@
               :opacity="0.9"
             ></ol-style-icon>
             <ol-style-text
-              text="Hellooooo"
+              :text="point.label"
               :scale="1.5"
-              :offset-y="30"
+              :offset-y="40"
             ></ol-style-text>
           </ol-style>
         </ol-feature>
@@ -34,11 +33,14 @@
     <n-row style="margin-bottom: 10px">
       <n-col :span="12">
         <n-statistic label="Coordonnées">
-          [{{ currentCenter[0] }}; {{ currentCenter[1] }}]
+          [{{ Number(currentCenter[0]).toFixed(2) }};
+          {{ Number(currentCenter[1]).toFixed(2) }}]
         </n-statistic>
       </n-col>
       <n-col :span="12">
-        <n-statistic label="Zoom"> x{{ currentZoom }} </n-statistic>
+        <n-statistic label="Zoom">
+          x{{ Number(currentZoom).toFixed(2) }}
+        </n-statistic>
       </n-col>
     </n-row>
   </ol-map>
@@ -66,24 +68,36 @@
         'getAirport',
         'getAirportsCoordinates',
       ]),
-      getCoordinates(): any {
-        return this.coordinates.map((e: any) => e.coordinates)
-      },
     },
     async mounted(): Promise<void> {
       this.$store.state.common.loading = 'start'
       this.coordinates = await this.getAirportsCoordinates
       this.$store.state.common.loading = 'finish'
 
-      console.log(this.coordinates)
       if (this.coordinates.length) this.center = this.coordinates[0].coordinates
     },
     methods: {
       ...mapActions('analysis', ['selectAirportById']),
       selection(event: any): void {
         const coordinates = event.mapBrowserEvent.coordinate
-        this.$store.state.analysis.activemap = false
-        console.log(event.mapBrowserEvent.coordinate)
+
+        // Teste pour chaque aeroport si les coordonnées correspondent
+        const clicked = this.coordinates.filter((e: any) => {
+          if (!e.coordinates.length) return false
+          const offsetX = e.coordinates[0] - coordinates[0]
+          const offsetY = e.coordinates[1] - coordinates[1]
+          const offset = Math.abs(offsetX) + Math.abs(offsetY)
+          return offset < 1
+        })
+
+        // Si l'aeroport peut être résolu, valide
+        if (clicked.length) {
+          this.selectAirportById(clicked[0].value)
+          this.$store.state.analysis.activemap = false
+        } else {
+          const date = new Date().toTimeString().split(' ')[0]
+          this.$store.state.common.error = `[${date}] An error occured during the selection...`
+        }
       },
       zoomChanged(zoom: any): void {
         this.currentZoom = zoom

@@ -37,7 +37,7 @@ export default <GetterTree<Analysis, any>>{
 
             // Enfin, on retourne seulement les coordonées
             return {
-              id: airport.id,
+              value: airport.value,
               label: airport.label,
               coordinates: place == null ? [] : [place.lat, place.lon],
             }
