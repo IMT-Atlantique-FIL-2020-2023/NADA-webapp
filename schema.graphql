@@ -67,12 +67,12 @@ type Airport implements Node {
   """
   Airport literal name
   """
-  name: String! @fake(locale: fr, type: city)
+  name: String! @examples(values: ["Nantes", "Paris", "Lyon", "Brest", "Dijon"])
 
   """
   List of available sensors for this airport
   """
-  sensors: [Sensor!]! @listLength(min: 2, max: 2)
+  sensors: [Sensor!]! @listLength(min: 2, max: 5)
 
   """
   Get mean measures for a specific day, for each sensor available.

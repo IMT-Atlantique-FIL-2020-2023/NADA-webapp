@@ -7,4 +7,5 @@ export default {
   sensor: null,
   sensors: [],
   selection: [],
+  activemap: false,
 }

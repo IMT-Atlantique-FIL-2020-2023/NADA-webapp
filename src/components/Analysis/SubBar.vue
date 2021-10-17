@@ -11,7 +11,7 @@
         />
       </n-form-item>
       <n-form-item>
-        <n-button>
+        <n-button @click="$store.state.analysis.activemap = true">
           <template #icon><mdi-map /></template>
         </n-button>
       </n-form-item>

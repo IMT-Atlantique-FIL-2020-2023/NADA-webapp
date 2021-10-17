@@ -1,6 +1,8 @@
 import { GetterTree } from 'vuex'
 import { Analysis } from '@/types/store'
 import { Sensor } from '@/types/analysis'
+import axios from 'axios'
+
 export default <GetterTree<Analysis, any>>{
   getAirports(state) {
     return state.airports.map((e: any) => ({
@@ -16,6 +18,32 @@ export default <GetterTree<Analysis, any>>{
   },
   getAirportId(state) {
     return state.airport?.id
+  },
+  async getAirportsCoordinates(state, getters) {
+    return await Promise.all(
+      getters.getAirports.map(async (airport: any) => {
+        return await axios
+          .get(
+            `https://nominatim.openstreetmap.org/search?q=${airport.label}+Airport&format=json`
+          )
+          .then((response) => {
+            const data = response.data as Array<any>
+
+            // On essaye de récuperer un noeud
+            let place = data.filter((e: any) => e['osm_type'] == 'node')[0]
+
+            // Si pas de noeuds renseignés, on prends une allée
+            if (place == null) place = data[0]
+
+            // Enfin, on retourne seulement les coordonées
+            return {
+              id: airport.id,
+              label: airport.label,
+              coordinates: place == null ? [] : [place.lat, place.lon],
+            }
+          })
+      })
+    )
   },
   getMeasurements(state) {
     return state.sensors.map((e: any) => ({

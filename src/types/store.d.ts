@@ -17,6 +17,7 @@ interface Analysis {
   sensor: Sensor | undefined
   sensors: Array<Sensor>
   selection: Array<number>
+  activemap: boolean
 }
 
 interface State {

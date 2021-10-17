@@ -1,26 +1,37 @@
 <template>
   <div>
     <sub-bar></sub-bar>
-    <div class="nada-split">
-      <split-panes
-        :side="50"
-        :horizontal="$store.state.analysis.layout == 'v'"
-        @resized="resized"
-      >
-        <template #left>
-          <div class="nada-pane">
-            <interval></interval>
-            <timeline></timeline>
-            <datagrid></datagrid>
-          </div>
-        </template>
-        <template #right>
-          <div class="nada-pane">
-            <graphs></graphs>
-          </div>
-        </template>
-      </split-panes>
-    </div>
+    <drawer :cclass="'nada-split'" :dtitle="'Carte des aéroports'">
+      <template #content>
+        <split-panes
+          :side="50"
+          :horizontal="$store.state.analysis.layout == 'v'"
+          @resized="resized"
+        >
+          <template #left>
+            <div class="nada-pane">
+              <interval></interval>
+              <timeline></timeline>
+              <datagrid></datagrid>
+            </div>
+          </template>
+          <template #right>
+            <div class="nada-pane">
+              <graphs></graphs>
+            </div>
+          </template>
+        </split-panes>
+      </template>
+
+      <template #drawer>
+        <n-skeleton
+          v-if="!$store.state.analysis.activemap"
+          height="100%"
+          width="100%"
+        />
+        <map-container v-else></map-container>
+      </template>
+    </drawer>
   </div>
 </template>
 <script lang="ts">
@@ -30,6 +41,9 @@
   import Interval from '@/components/Analysis/Interval.vue'
   import Timeline from '@/components/Analysis/Timeline.vue'
   import Graphs from '@/components/Analysis/Graphs.vue'
+  import Drawer from '@/components/Analysis/Drawer.vue'
+  import MapContainer from '@/components/Analysis/MapContainer.vue'
+
   export default {
     name: 'Analysis',
     components: {
@@ -39,6 +53,8 @@
       Datagrid,
       Graphs,
       SubBar,
+      Drawer,
+      MapContainer,
     },
     watch: {
       '$store.state.analysis.layout'(): any {
