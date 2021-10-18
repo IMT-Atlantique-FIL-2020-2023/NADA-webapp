@@ -1,3 +1,4 @@
+/*
 import ApexCharts from 'apexcharts'
 
 app.config.globalProperties.$apexcharts = ApexCharts
@@ -8,3 +9,4 @@ declare module '@vue/runtime-core' {
     $apexcharts: typeof ApexCharts
   }
 }
+*/
