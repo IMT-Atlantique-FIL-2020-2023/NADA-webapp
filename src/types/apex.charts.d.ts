@@ -1,3 +1,4 @@
+/*
 import ApexCharts from 'apexcharts'
 // Add this when into a TypeScript codebase
 declare module '@vue/runtime-core' {
@@ -5,3 +6,4 @@ declare module '@vue/runtime-core' {
     $apexcharts: typeof ApexCharts
   }
 }
+*/
