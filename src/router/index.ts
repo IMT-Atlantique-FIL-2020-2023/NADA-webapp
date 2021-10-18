@@ -7,6 +7,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Home',
     component: Analysis,
   },
+  {
+    path: '/:catchAll(.*)',
+    name: 'Home',
+    component: Analysis,
+  },
 ]
 
 const router = createRouter({
