@@ -13,4 +13,7 @@ export default <MutationTree<Analysis>>{
   setSensor(state, value) {
     state.sensor = value
   },
+  setSelection(state, value) {
+    state.selection = value
+  },
 }

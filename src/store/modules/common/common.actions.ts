@@ -6,11 +6,14 @@ import gql from 'graphql-tag'
 export default <ActionTree<Common, any>>{
   async appoloRequest({ state }, { query, error }) {
     try {
+      state.loading = 'start'
       const result = await appolo.defaultClient.query({ query: gql(query) })
+      state.loading = 'finish'
       return result
     } catch (e) {
       const date = new Date().toTimeString().split(' ')[0]
       state.error = `[${date}] ${error}`
+      state.loading = 'error'
     }
   },
 }

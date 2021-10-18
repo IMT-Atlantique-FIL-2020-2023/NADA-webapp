@@ -1,8 +1,6 @@
 <template>
   <n-space class="nada-bar">
-    <n-space>
-      <n-gradient-text type="info"> N.A.D.A </n-gradient-text>
-    </n-space>
+    <n-space>N.A.D.A</n-space>
 
     <n-space class="align-right">
       <n-switch
@@ -41,10 +39,6 @@
   .nada-bar {
     padding: 10px;
     width: 100%;
-  }
-  .align-right {
-    position: absolute;
-    right: 20px;
   }
   .theme-switch {
     float: right;

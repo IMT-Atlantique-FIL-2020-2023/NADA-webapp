@@ -1,6 +1,8 @@
 import { GetterTree } from 'vuex'
 import { Analysis } from '@/types/store'
 import { Sensor } from '@/types/analysis'
+import axios from 'axios'
+
 export default <GetterTree<Analysis, any>>{
   getAirports(state) {
     return state.airports.map((e: any) => ({
@@ -16,6 +18,32 @@ export default <GetterTree<Analysis, any>>{
   },
   getAirportId(state) {
     return state.airport?.id
+  },
+  async getAirportsCoordinates(state, getters) {
+    return await Promise.all(
+      getters.getAirports.map(async (airport: any) => {
+        return await axios
+          .get(
+            `https://nominatim.openstreetmap.org/search?q=${airport.label}+Airport&format=json`
+          )
+          .then((response) => {
+            const data = response.data as Array<any>
+
+            // On essaye de récuperer un noeud
+            let place = data.filter((e: any) => e['osm_type'] == 'node')[0]
+
+            // Si pas de noeuds renseignés, on prends une allée
+            if (place == null) place = data[0]
+
+            // Enfin, on retourne seulement les coordonées
+            return {
+              value: airport.value,
+              label: airport.label,
+              coordinates: place == null ? [] : [place.lat, place.lon],
+            }
+          })
+      })
+    )
   },
   getMeasurements(state) {
     return state.sensors.map((e: any) => ({
@@ -36,14 +64,14 @@ export default <GetterTree<Analysis, any>>{
     if (state.sensor == null) return []
 
     const sensor = state.sensors.find((e: any) => {
-      return e.id === state.sensor.id
+      return e.id === state.sensor?.id
     })
 
     if (sensor?.getMeanMeasureInterval == null) return []
 
     return sensor.getMeanMeasureInterval.map((e) => {
       const stringDate = e.startDate == null ? '' : e.startDate
-      const startDate = new Date(stringDate).getMilliseconds()
+      const startDate = new Date(stringDate).getTime()
       return [startDate, e.value]
     })
   },
@@ -65,5 +93,16 @@ export default <GetterTree<Analysis, any>>{
         })
       })
       .flat()
+  },
+  getSelectedData(state, getters) {
+    if (!state.selection.length) {
+      return getters.getData
+    }
+    return getters.getData.filter((e: any) => {
+      return (
+        new Date(e.startDate) >= new Date(state.selection[0]) &&
+        new Date(e.startDate) <= new Date(state.selection[1])
+      )
+    })
   },
 }

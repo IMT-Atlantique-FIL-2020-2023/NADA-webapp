@@ -3,9 +3,10 @@
     :theme="isThemeDark() ? 'darkMaterial' : 'material'"
     :columns="columns"
     :grouping="grouping"
-    :source="getData()"
-    :filter="true"
+    :source="getSelectedData()"
+    :filter="false"
     :auto-size-column="autosize"
+    style="height: calc(100% - 350px)"
   ></v-grid>
 </template>
 <script lang="ts">
@@ -67,7 +68,7 @@
       }
     },
     methods: {
-      ...mapGetters('analysis', ['getData']),
+      ...mapGetters('analysis', ['getSelectedData']),
       isThemeDark(): boolean {
         return this.$store.state.common.theme !== null
       },
