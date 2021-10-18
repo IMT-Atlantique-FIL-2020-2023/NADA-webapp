@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue'
 
 import { join, resolve } from 'path'
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/NADA-webapp/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/NADA-webapp/' : '/', //process.env.VITE_BASE_URL,
   server: {
     port: 8080,
   },

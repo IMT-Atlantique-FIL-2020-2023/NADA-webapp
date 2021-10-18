@@ -9,14 +9,10 @@
   ></apexchart>
 </template>
 <script lang="ts">
-  import VueApexCharts from 'vue3-apexcharts'
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
     name: 'Timeline',
-    components: {
-      apexchart: VueApexCharts,
-    },
     data(): any {
       return {
         chartOptions: {
