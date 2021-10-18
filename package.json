@@ -1,6 +1,6 @@
 {
   "name": "nada-webapp",
-  "version": "1.0.0",
+  "version": "0.9.6",
   "scripts": {
     "lint:style": "stylelint src/**/*.{css,scss,vue}",
     "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore .",
@@ -22,6 +22,7 @@
     "@mdi/font": "5.9.55",
     "@revolist/vue3-datagrid": "^3.0.96",
     "@vue/apollo-option": "^4.0.0-alpha.15",
+    "apexcharts": "^3.29.0",
     "apollo-boost": "^0.4.9",
     "axios": "^0.23.0",
     "graphql": "^15.6.1",
