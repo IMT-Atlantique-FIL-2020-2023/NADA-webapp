@@ -6,7 +6,7 @@
           :value="getAirportId"
           :options="getAirports"
           filterable
-          placeholder="selectionnez un aéroport"
+          placeholder="Selectionnez un aéroport"
           @update:value="selectAirport"
         />
       </n-form-item>
