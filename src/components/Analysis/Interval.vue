@@ -18,7 +18,7 @@
         :options="getMeasurements"
         :show-feedback="true"
         filterable
-        placeholder="selectionnez une mesure"
+        placeholder="Mesure affichée"
         @update:value="selectMeasurement"
       />
     </n-space>

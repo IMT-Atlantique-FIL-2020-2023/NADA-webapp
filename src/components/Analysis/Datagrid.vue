@@ -21,42 +21,42 @@
       return {
         columns: [
           {
-            name: 'ID',
             prop: 'id',
+            name: 'Id',
             size: 150,
             sortable: true,
           },
           {
             prop: 'startDate',
-            name: 'startDate',
+            name: 'Début',
             columnType: 'date',
             sortable: true,
             order: 'asc',
           },
           {
             prop: 'endDate',
-            name: 'endDate',
+            name: 'Fin',
             columnType: 'date',
             sortable: true,
           },
           {
             prop: 'mesure',
-            name: 'mesure',
+            name: 'Mesure',
             sortable: true,
           },
           {
             prop: 'name',
-            name: 'name',
+            name: 'Label',
             sortable: true,
           },
           {
             prop: 'unit',
-            name: 'unit',
+            name: 'Unitée',
             sortable: true,
           },
           {
             prop: 'value',
-            name: 'value',
+            name: 'Valeur',
             sortable: true,
           },
         ],
