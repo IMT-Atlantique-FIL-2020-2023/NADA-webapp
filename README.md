@@ -65,7 +65,14 @@
 
 ### Built With
 
-- [Vue.js](https://vuejs.org/)
+- [Vite.js](https://vitejs.dev/)
+- [Vue3.js](https://v3.vuejs.org/)
+- [ApexCharts.js](https://apexcharts.com/)
+- [Axios.js](https://axios-http.com/)
+- [Graphql.js](https://graphql.org)
+- [Appolo.js](https://www.apollographql.com/)
+- [SplitPanes.js](https://antoniandre.github.io/splitpanes/)
+- [OpenLayers.js](https://openlayers.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
