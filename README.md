@@ -73,6 +73,7 @@
 - [Appolo.js](https://www.apollographql.com/)
 - [SplitPanes.js](https://antoniandre.github.io/splitpanes/)
 - [OpenLayers.js](https://openlayers.org/)
+- [Proj4.js](http://proj4js.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -107,6 +108,12 @@ nvm use 14.X.X
 2. Then setup the dependancies (`npm install`)
 3. Launch the vite dev app (`npm run dev`)
 4. Launch the appolo mock (`npm mock:api`)
+
+> **In case of problem with the mock, do it manually with:**
+> ```
+> npm install -g graphql-faker
+> graphql-faker --port 9002 schema.graphql
+> ```
 
 **To compile and deploy the app**
 

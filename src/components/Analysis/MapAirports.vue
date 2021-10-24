@@ -1,17 +1,10 @@
 <template>
-  <ol-map style="height: calc(100% - 80px)">
-    <ol-view
-      :center="center"
-      :zoom="zoom"
-      :projection="'EPSG:4326'"
-      @zoomChanged="zoomChanged"
-      @centerChanged="centerChanged"
-    />
-    <ol-tile-layer>
-      <ol-source-osm :image-smoothing="true" />
-    </ol-tile-layer>
-    <ol-interaction-select @select="selection"></ol-interaction-select>
-    <ol-vector-layer>
+  <map-container
+    ref="map"
+    style="height: calc(100% - 80px)"
+    @selection="selection"
+  >
+    <template #overlay>
       <ol-source-vector>
         <ol-feature v-for="(point, i) in coordinates" :key="i">
           <ol-geom-point :coordinates="point.coordinates"></ol-geom-point>
@@ -29,37 +22,37 @@
           </ol-style>
         </ol-feature>
       </ol-source-vector>
-    </ol-vector-layer>
-    <n-row style="margin-bottom: 10px">
-      <n-col :span="12">
-        <n-statistic label="Coordonnées">
-          [{{ Number(currentCenter[0]).toFixed(2) }};
-          {{ Number(currentCenter[1]).toFixed(2) }}]
-        </n-statistic>
-      </n-col>
-      <n-col :span="12">
-        <n-statistic label="Zoom">
-          x{{ Number(currentZoom).toFixed(2) }}
-        </n-statistic>
-      </n-col>
-    </n-row>
-  </ol-map>
+    </template>
+    <template #layout>
+      <n-row style="margin-bottom: 10px">
+        <n-col :span="12">
+          <n-statistic label="Coordonnées">
+            [{{ Number(currentCenter[0]).toFixed(2) }};
+            {{ Number(currentCenter[1]).toFixed(2) }}]
+          </n-statistic>
+        </n-col>
+        <n-col :span="12">
+          <n-statistic label="Zoom">
+            x{{ Number(currentZoom).toFixed(2) }}
+          </n-statistic>
+        </n-col>
+      </n-row>
+    </template>
+  </map-container>
 </template>
 
 <script lang="ts">
   import { mapActions, mapGetters } from 'vuex'
   import marker from '@/assets/marker.svg'
+  import MapContainer from '@/components/MapContainer.vue'
 
   export default {
-    name: 'MapContainer',
+    name: 'MapAirports',
+    components: { MapContainer },
     data(): any {
       return {
         marker: marker,
-        center: [0, 0],
-        zoom: 8,
         coordinates: [],
-        currentZoom: 0,
-        currentCenter: [0, 0],
       }
     },
     computed: {
@@ -68,13 +61,20 @@
         'getAirport',
         'getAirportsCoordinates',
       ]),
+      currentCenter(): any {
+        return this.$refs.map?.center ? this.$refs.map.center : [0, 0]
+      },
+      currentZoom(): any {
+        return this.$refs.map?.zoom ? this.$refs.map.zoom : 8
+      },
     },
     async mounted(): Promise<void> {
       this.$store.state.common.loading = 'start'
       this.coordinates = await this.getAirportsCoordinates
       this.$store.state.common.loading = 'finish'
-
-      if (this.coordinates.length) this.center = this.coordinates[0].coordinates
+      if (this.coordinates.length) {
+        this.$refs.map.center = this.coordinates[0].coordinates
+      }
     },
     methods: {
       ...mapActions('analysis', ['selectAirportById']),
@@ -98,12 +98,6 @@
           const date = new Date().toTimeString().split(' ')[0]
           this.$store.state.common.error = `[${date}] An error occured during the selection...`
         }
-      },
-      zoomChanged(zoom: any): void {
-        this.currentZoom = zoom
-      },
-      centerChanged(center: any): void {
-        this.currentCenter = center
       },
     },
   }
