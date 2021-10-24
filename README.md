@@ -49,7 +49,6 @@
     </li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -64,9 +63,17 @@
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+
 ### Built With
 
-- [Vue.js](https://vuejs.org/)
+- [Vite.js](https://vitejs.dev/)
+- [Vue3.js](https://v3.vuejs.org/)
+- [ApexCharts.js](https://apexcharts.com/)
+- [Axios.js](https://axios-http.com/)
+- [Graphql.js](https://graphql.org)
+- [Appolo.js](https://www.apollographql.com/)
+- [SplitPanes.js](https://antoniandre.github.io/splitpanes/)
+- [OpenLayers.js](https://openlayers.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -78,11 +85,35 @@
 
 ### Prerequisites
 
-> `// TODO`
+You will need several programs to run this application on your machine:
+
+- [git](), to fetch and manage the project files
+- [docker](), if you want to run the app in a container
+- [node 14](), for the development or deployment server
+
+For node, we recommend the use of [nvm]()
+```
+nvm install 14.X.X
+nvm use 14.X.X
+```
 
 ### Installation
 
-> `// TODO`
+**To fetch the project files**
+
+1. Clone this project (`git clone https://github.com/IMT-Atlantique-FIL-2020-2023/NADA-webapp.git`)
+
+**To launch the development env**
+
+2. Then setup the dependancies (`npm install`)
+3. Launch the vite dev app (`npm run dev`)
+4. Launch the appolo mock (`npm mock:api`)
+
+**To compile and deploy the app**
+
+5. Check the preview (`npm run serve`)
+6. Build the app (`npm run build`)
+7. browse the compiled version (`cd ./dist`)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -108,16 +139,6 @@ Don't forget to give the project a star! Thanks again!
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-<!-- CONTACT -->
-
-## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
