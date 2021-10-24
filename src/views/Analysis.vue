@@ -29,7 +29,7 @@
           height="100%"
           width="100%"
         />
-        <map-container v-else></map-container>
+        <map-airports v-else></map-airports>
       </template>
     </drawer>
   </div>
@@ -41,7 +41,7 @@
   import Interval from '@/components/Analysis/Interval.vue'
   import Timeline from '@/components/Analysis/Timeline.vue'
   import Drawer from '@/components/Analysis/Drawer.vue'
-  import MapContainer from '@/components/Analysis/MapContainer.vue'
+  import MapAirports from '@/components/Analysis/MapAirports.vue'
   import Graphs from '@/views/Graphs.vue'
 
   export default {
@@ -54,7 +54,7 @@
       Graphs,
       SubBar,
       Drawer,
-      MapContainer,
+      MapAirports,
     },
     watch: {
       '$store.state.analysis.layout'(): any {

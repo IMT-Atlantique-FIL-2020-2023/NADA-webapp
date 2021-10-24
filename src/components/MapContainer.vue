@@ -1,5 +1,5 @@
 <template>
-  <ol-map style="height: calc(100% - 80px)">
+  <ol-map>
     <ol-view
       :center="center"
       :zoom="zoom"
@@ -11,6 +11,9 @@
       <ol-source-osm :image-smoothing="true" />
     </ol-tile-layer>
     <ol-interaction-select @select="selection"></ol-interaction-select>
+    <ol-vector-layer>
+      <slot name="overlay"></slot>
+    </ol-vector-layer>
     <slot name="layout"></slot>
   </ol-map>
 </template>
@@ -23,7 +26,6 @@
       return {
         center: [0, 0],
         zoom: 8,
-        coordinates: [],
         currentZoom: 0,
         currentCenter: [0, 0],
       }

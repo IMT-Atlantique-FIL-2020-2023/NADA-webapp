@@ -24,6 +24,7 @@
     "apollo-boost": "^0.4.9",
     "axios": "^0.23.0",
     "graphql": "^15.6.1",
+    "proj4": "^2.7.5",
     "roboto-fontface": "*",
     "splitpanes": "^3.0.6",
     "vue": "^3.2.6",

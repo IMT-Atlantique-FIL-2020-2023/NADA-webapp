@@ -1,5 +1,5 @@
 <template>
-  <n-card></n-card>
+  <div></div>
 </template>
 <script lang="ts">
   export default {

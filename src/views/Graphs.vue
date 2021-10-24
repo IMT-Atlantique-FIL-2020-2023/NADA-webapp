@@ -1,6 +1,6 @@
 <template>
   <n-tabs default-value="weather" size="large" style="height: 100%">
-    <n-tab-pane name="weather" tab="Weather">
+    <n-tab-pane name="weather" tab="Météo">
       <weather></weather>
     </n-tab-pane>
     <n-tab-pane name="position" tab="Position" style="height: 100%">
