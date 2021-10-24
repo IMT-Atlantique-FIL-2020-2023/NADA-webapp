@@ -63,7 +63,10 @@
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 ### Built With
 
 - [Vite.js](https://vitejs.dev/)
@@ -146,11 +149,17 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Acknowledgments
 
+<<<<<<< HEAD
 Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
 
 - [Img Shields](https://shields.io)
 - [GitHub Pages](https://pages.github.com)
 - [Font Awesome](https://fontawesome.com)
+=======
+- [Img Shields](https://shields.io)
+- [GitHub Pages](https://pages.github.com)
+- [Material design icons](https://materialdesignicons.com/)
+>>>>>>> main
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -161,7 +170,11 @@ Use this space to list resources you find helpful and would like to give credit 
 [language-shield]: https://img.shields.io/github/languages/top/IMT-Atlantique-FIL-2020-2023/NADA-webapp?style=flat-square
 [language-url]: https://github.com/IMT-Atlantique-FIL-2020-2023/NADA-webapp/search?l=vue
 [roadmap-shield]: https://img.shields.io/badge/roadmap-available-brightgreen?style=flat-square
+<<<<<<< HEAD
 [roadmap-url]: https://github.com/IMT-Atlantique-FIL-2020-2023/NADA-webapp/projects/1
+=======
+[roadmap-url]: https://github.com/orgs/IMT-Atlantique-FIL-2020-2023/projects/1
+>>>>>>> main
 [license-shield]: https://img.shields.io/github/license/IMT-Atlantique-FIL-2020-2023/NADA-webapp?style=flat-square
 [license-url]: https://github.com/IMT-Atlantique-FIL-2020-2023/NADA-webapp/blob/main/LICENSE/
 [logo]: src/assets/logo.png
