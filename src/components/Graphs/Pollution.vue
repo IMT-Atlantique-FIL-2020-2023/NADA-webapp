@@ -1,8 +1,8 @@
 <template>
-  <div>Graphs</div>
+  <n-card></n-card>
 </template>
 <script lang="ts">
   export default {
-    name: 'Graphs',
+    name: 'Pollution',
   }
 </script>

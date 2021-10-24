@@ -108,6 +108,12 @@ nvm use 14.X.X
 3. Launch the vite dev app (`npm run dev`)
 4. Launch the appolo mock (`npm mock:api`)
 
+> **In case of problem with the mock, do it manually with:**
+> ```
+> npm install -g graphql-faker
+> graphql-faker --port 9002 schema.graphql
+> ```
+
 **To compile and deploy the app**
 
 5. Check the preview (`npm run serve`)

@@ -40,9 +40,9 @@
   import Datagrid from '@/components/Analysis/Datagrid.vue'
   import Interval from '@/components/Analysis/Interval.vue'
   import Timeline from '@/components/Analysis/Timeline.vue'
-  import Graphs from '@/components/Analysis/Graphs.vue'
   import Drawer from '@/components/Analysis/Drawer.vue'
   import MapContainer from '@/components/Analysis/MapContainer.vue'
+  import Graphs from '@/views/Graphs.vue'
 
   export default {
     name: 'Analysis',
