@@ -18,7 +18,6 @@
               :text="`Aéroport de ${point.label}`"
               :scale="1.3"
               :offset-y="10"
-              fill="#7a2167"
             ></ol-style-text>
           </ol-style>
         </ol-feature>
