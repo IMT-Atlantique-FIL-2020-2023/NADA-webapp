@@ -6,18 +6,19 @@
   >
     <template #overlay>
       <ol-source-vector>
-        <ol-feature v-for="(point, i) in coordinates" :key="i">
+        <ol-feature v-for="(point, i) in mappedCoordinates" :key="i">
           <ol-geom-point :coordinates="point.coordinates"></ol-geom-point>
           <ol-style>
             <ol-style-icon
               :src="marker"
-              :scale="2.5"
+              :scale="5.2"
               :opacity="0.9"
             ></ol-style-icon>
             <ol-style-text
-              :text="point.label"
-              :scale="1.5"
-              :offset-y="40"
+              :text="`Aéroport de ${point.label}`"
+              :scale="1.3"
+              :offset-y="10"
+              fill="#7a2167"
             ></ol-style-text>
           </ol-style>
         </ol-feature>
@@ -42,6 +43,7 @@
 </template>
 
 <script lang="ts">
+  import { fromLonLat, toLonLat } from 'ol/proj'
   import { mapActions, mapGetters } from 'vuex'
   import marker from '@/assets/marker.svg'
   import MapContainer from '@/components/MapContainer.vue'
@@ -67,19 +69,27 @@
       currentZoom(): any {
         return this.$refs.map?.zoom ? this.$refs.map.zoom : 8
       },
+      mappedCoordinates(): any {
+        return this.coordinates.map((e: any) => ({
+          label: e.label,
+          value: e.value,
+          coordinates: fromLonLat(e.coordinates),
+        }))
+      },
     },
     async mounted(): Promise<void> {
       this.$store.state.common.loading = 'start'
       this.coordinates = await this.getAirportsCoordinates
+
       this.$store.state.common.loading = 'finish'
       if (this.coordinates.length) {
-        this.$refs.map.center = this.coordinates[0].coordinates
+        this.$refs.map.center = this.mappedCoordinates[0].coordinates
       }
     },
     methods: {
       ...mapActions('analysis', ['selectAirportById']),
       selection(event: any): void {
-        const coordinates = event.mapBrowserEvent.coordinate
+        const coordinates = toLonLat(event.mapBrowserEvent.coordinate)
 
         // Teste pour chaque aeroport si les coordonnées correspondent
         const clicked = this.coordinates.filter((e: any) => {

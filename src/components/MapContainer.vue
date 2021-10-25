@@ -3,7 +3,7 @@
     <ol-view
       :center="center"
       :zoom="zoom"
-      :projection="'EPSG:4326'"
+      :projection="'EPSG:3857'"
       @zoomChanged="zoomChanged"
       @centerChanged="centerChanged"
     />

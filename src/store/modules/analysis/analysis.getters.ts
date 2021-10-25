@@ -24,7 +24,7 @@ export default <GetterTree<Analysis, any>>{
       getters.getAirports.map(async (airport: any) => {
         return await axios
           .get(
-            `https://nominatim.openstreetmap.org/search?q=${airport.label}+Airport&format=json`
+            `https://nominatim.openstreetmap.org/search?q=${airport.label}+Airport+France&format=json`
           )
           .then((response) => {
             const data = response.data as Array<any>
@@ -39,7 +39,7 @@ export default <GetterTree<Analysis, any>>{
             return {
               value: airport.value,
               label: airport.label,
-              coordinates: place == null ? [] : [place.lat, place.lon],
+              coordinates: place == null ? [] : [place.lon, place.lat],
             }
           })
       })
