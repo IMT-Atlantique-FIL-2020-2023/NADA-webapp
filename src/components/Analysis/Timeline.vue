@@ -17,8 +17,11 @@
       return {
         chartOptions: {
           chart: {
-            type: 'bar',
+            type: 'area',
             id: 'timeline',
+            stroke: {
+              curve: 'smooth',
+            },
             toolbar: {
               show: false,
               autoSelected: 'selection',

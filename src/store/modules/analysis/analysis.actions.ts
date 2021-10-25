@@ -75,7 +75,12 @@ export default <ActionTree<Analysis, any>>{
                         name
                         unit
                     }
-                    getMeanMeasureInterval(start: "${state.period[0]}", end: "${state.period[1]}", discretize: 24, discretizeMode: PER_DAY) {
+                    getMeanMeasureInterval(
+                        start: "${state.period[0].toISOString()}"
+                        end: "${state.period[1].toISOString()}"
+                        discretize: "5m"
+                        discretizeMode: FLUX_DURATION
+                    ) {
                         id
                         value
                         startDate
