@@ -1,11 +1,20 @@
 <template>
   <apexchart
-    ref="chart"
+    ref="areaChart"
     width="100%"
-    height="300px"
-    :options="chartOptions"
+    height="260px"
+    :options="areaChartOptions"
+    :series="getSeries()"
+    @mounted="areaChartMounted"
+  ></apexchart>
+  <apexchart
+    ref="barChart"
+    width="100%"
+    height="130px"
+    :options="barChartOptions"
     :series="getSeries()"
     @selection="getSelection"
+    @mounted="barChartMounted"
   ></apexchart>
 </template>
 <script lang="ts">
@@ -15,22 +24,40 @@
     name: 'Timeline',
     data(): any {
       return {
-        chartOptions: {
+        areaChart: null,
+        barChart: null,
+        areaChartOptions: {
           chart: {
             type: 'area',
-            id: 'timeline',
-            stroke: {
-              curve: 'smooth',
+            id: 'timeline-area',
+            toolbar: {
+              show: false,
+              autoSelected: 'pan',
             },
+            zoom: {
+              enabled: false,
+            },
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          xaxis: {
+            type: 'datetime',
+          },
+          yaxis: {
+            tickAmount: 5,
+          },
+        },
+        barChartOptions: {
+          chart: {
+            type: 'bar',
+            id: 'timeline-bar',
             toolbar: {
               show: false,
               autoSelected: 'selection',
             },
             zoom: {
               enabled: false,
-            },
-            xaxis: {
-              type: 'datetime',
             },
             selection: {
               enabled: true,
@@ -57,30 +84,40 @@
               },
             },
           },
+          dataLabels: {
+            enabled: false,
+          },
+          xaxis: {
+            type: 'datetime',
+          },
+          yaxis: {
+            tickAmount: 2,
+            decimalsInFloat: 6,
+          },
         },
       }
     },
     watch: {
+      '$store.state.common.theme'(): void {
+        this.setPopupTheme(this.barChart)
+        this.setPopupTheme(this.areaChart)
+      },
       '$store.state.common.resized'(): void {
-        const chart = this.$refs.chart
-        // Reset selection on resize
-        chart.updateOptions({
-          chart: {
-            selection: {
-              xaxis: {
-                min: undefined,
-                max: undefined,
-              },
-            },
-          },
-        })
-        // Refresh to adapt size
-        chart.refresh()
+        this.setDefaultSelection(this.barChart)
+        this.barChart.refresh() // refresh to adapt size
       },
     },
     methods: {
       ...mapGetters('analysis', ['getTimeline']),
       ...mapMutations('analysis', ['setSelection']),
+      areaChartMounted(): void {
+        this.areaChart = this.$refs.areaChart
+      },
+      barChartMounted(): void {
+        this.barChart = this.$refs.barChart
+        this.setDefaultSelection(this.barChart)
+        this.barChart.refresh() // refresh to adapt size
+      },
       getSeries(): any {
         return [
           {
@@ -105,6 +142,31 @@
         if (times.length && xaxis.max < times[0]) {
           this.setSelection([xaxis.min, xaxis.max])
         }
+      },
+      setDefaultSelection(chart: any): void {
+        const times = this.getTimeline()
+        if (!times.length) return
+
+        const width = Math.floor(times.length * 0.25)
+        const lastIndex = this.getTimeline().length - 1
+        const firstIndex = lastIndex - width
+        chart.updateOptions({
+          chart: {
+            selection: {
+              xaxis: {
+                min: times[firstIndex][0],
+                max: times[lastIndex][0],
+              },
+            },
+          },
+        })
+      },
+      setPopupTheme(chart: any): void {
+        chart.updateOptions({
+          tooltip: {
+            theme: this.$store.state.common.theme == null ? 'light' : 'dark',
+          },
+        })
       },
     },
   }
