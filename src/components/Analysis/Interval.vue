@@ -3,7 +3,7 @@
     <n-form-item label="Période">
       <n-date-picker
         v-model:value="$store.state.analysis.period"
-        style="padding-right: 170px"
+        style="padding-right: 200px"
         type="daterange"
         :show-feedback="true"
         :update-value-on-close="true"
@@ -13,7 +13,7 @@
 
     <n-space class="align-right">
       <n-select
-        style="width: 140px"
+        style="width: 180px"
         :value="getMeasurementId"
         :options="getMeasurements"
         :show-feedback="true"
