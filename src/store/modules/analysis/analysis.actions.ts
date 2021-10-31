@@ -101,7 +101,7 @@ export default <ActionTree<Analysis, any>>{
   },
   selectSensorByMesureId({ dispatch, commit, state }, id) {
     const sensor = state.sensors.find((e) => {
-      return e.measurement.id === id
+      return e.id === id
     })
     commit('setSensor', sensor)
   },

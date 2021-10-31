@@ -47,18 +47,20 @@ export default <GetterTree<Analysis, any>>{
   },
   getMeasurements(state) {
     return state.sensors.map((e: any) => ({
+      measurement: e.measurement.id,
       label: e.measurement.name,
-      value: e.measurement.id,
+      value: e.id,
     }))
   },
   getMeasurement(state) {
     return {
+      measurement: state.sensor?.measurement.id,
       label: state.sensor?.measurement.name,
-      value: state.sensor?.measurement.id,
+      value: state.sensor?.id,
     }
   },
   getMeasurementId(state) {
-    return state.sensor?.measurement.id
+    return state.sensor?.id
   },
   getTimeline(state) {
     if (state.sensor == null) return []
