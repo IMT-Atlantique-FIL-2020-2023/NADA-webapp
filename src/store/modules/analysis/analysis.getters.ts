@@ -48,19 +48,19 @@ export default <GetterTree<Analysis, any>>{
   getMeasurements(state) {
     return state.sensors.map((e: any) => ({
       measurement: e.measurement.id,
-      label: e.measurement.name,
-      value: e.id,
+      label: `${e.id}-${e.measurement.name}`,
+      value: `${e.id}-${e.measurement.id}`,
     }))
   },
   getMeasurement(state) {
     return {
       measurement: state.sensor?.measurement.id,
-      label: state.sensor?.measurement.name,
-      value: state.sensor?.id,
+      label: `${state.sensor?.id}-${state.sensor?.measurement.name}`,
+      value: `${state.sensor?.id}-${state.sensor?.measurement.id}`,
     }
   },
   getMeasurementId(state) {
-    return state.sensor?.id
+    return `${state.sensor?.id}-${state.sensor?.measurement.id}`
   },
   getTimeline(state) {
     if (state.sensor == null) return []
