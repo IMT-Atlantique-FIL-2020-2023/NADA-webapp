@@ -130,6 +130,9 @@
         // this.areaChart.refresh()
         // this.barChart.refresh()
       },
+      '$store.state.analysis.sensor'(): void {
+        this.areaChart.updateOptions({}) // forceUpdate
+      },
       '$store.state.common.resized'(): void {
         const selection = this.getSelection
         console.log(selection)
