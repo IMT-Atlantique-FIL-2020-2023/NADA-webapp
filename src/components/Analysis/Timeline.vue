@@ -82,6 +82,9 @@
         this.setPopupTheme(this.barChart)
         // this.barChart.refresh()
       },
+      '$store.state.analysis.sensor'(): void {
+        this.areaChart.updateOptions({}) // forceUpdate
+      },
       '$store.state.common.resized'(): void {
         this.setDefaultSelection(this.barChart)
         // this.barChart.refresh() // cause crash?
