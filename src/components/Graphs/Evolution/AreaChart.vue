@@ -2,7 +2,7 @@
   <apexchart
     ref="areaChart"
     width="100%"
-    height="260px"
+    height="180px"
     type="area"
     :options="areaChartOptions"
     :series="filteredSeries"
@@ -17,11 +17,13 @@
     name: 'AreaChart',
     props: {
       data: { type: Array, default: [] },
+      color: { type: String, default: '' },
     },
     data() {
       return {
         areaChart: null,
         areaChartOptions: {
+          colors: [this.color],
           chart: {
             id: 'chart1',
             toolbar: {

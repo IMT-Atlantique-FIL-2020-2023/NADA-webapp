@@ -94,10 +94,10 @@ export default <GetterTree<Analysis, any>>{
       }
     })
   },
-  getMeanMeasureInterval: (state) => (id: string) => {
-    const sensor = state.sensors.find((e: any) => {
-      return e.id === id
-    })
+  getMeanMeasureInterval: (state) => (id: string, measurement_id: string) => {
+    const sensor = state.sensors.find(
+      (e) => e.id === id && e.measurement.id === measurement_id
+    )
 
     if (sensor?.getMeanMeasureInterval == null) return []
 
@@ -109,7 +109,10 @@ export default <GetterTree<Analysis, any>>{
   },
   getTimeline(state, getters) {
     if (state.sensor == null) return []
-    return getters.getMeanMeasureInterval(state.sensor?.id)
+    return getters.getMeanMeasureInterval(
+      state.sensor?.id,
+      state.sensor?.measurement.id
+    )
   },
   getData(state) {
     return state.sensors

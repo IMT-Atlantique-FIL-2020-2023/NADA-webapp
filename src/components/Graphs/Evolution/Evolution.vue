@@ -1,16 +1,17 @@
 <template>
   <n-collapse>
     <n-collapse-item
-      v-for="type in getSensorsByType()"
+      v-for="(type, j) in getSensorsByType()"
       :key="type"
-      :title="type.id"
+      :title="type.name"
     >
-      <n-grid :x-gap="12" :y-gap="2" :cols="1">
+      <n-grid :x-gap="10" :y-gap="0" :cols="1">
         <n-grid-item>
           <area-chart
-            v-for="sensor in type.sensors"
+            v-for="(sensor, i) in type.sensors"
             :key="sensor"
-            :data="getMeanMeasureInterval()(sensor.id)"
+            :data="getMeanMeasureInterval()(sensor.id, sensor.measurement.id)"
+            :color="getColor(j + i)"
           ></area-chart>
         </n-grid-item>
       </n-grid>
@@ -25,6 +26,10 @@
     components: { AreaChart },
     methods: {
       ...mapGetters('analysis', ['getSensorsByType', 'getMeanMeasureInterval']),
+      getColor(index: number): string {
+        const goldenAngle = 180 * (3 - Math.sqrt(5))
+        return `hsl(${index * goldenAngle + 60}, 100%, 75%)`
+      },
     },
   }
 </script>
