@@ -7,7 +7,10 @@ export default <ActionTree<Common, any>>{
   async appoloRequest({ state }, { query, error }) {
     try {
       state.loading = 'start'
-      const result = await appolo.defaultClient.query({ query: gql(query) })
+      const result = await appolo.defaultClient.query({
+        query: gql(query),
+        fetchPolicy: 'no-cache',
+      })
       state.loading = 'finish'
       return result
     } catch (e) {

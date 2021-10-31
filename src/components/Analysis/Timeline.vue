@@ -16,18 +16,24 @@
     style="margin-top: -38px"
     :options="barChartOptions"
     :series="series"
-    @selection="getSelection"
+    @selection="debouncedFn"
     @mounted="barChartMounted"
   ></apexchart>
 </template>
 <script lang="ts">
+  import { useDebounceFn } from '@vueuse/core'
+  import { defineComponent } from 'vue'
   import { mapGetters, mapMutations } from 'vuex'
 
-  export default {
+  export default defineComponent({
     name: 'Timeline',
-    data(): any {
+    data() {
       return {
         areaChart: null,
+        debouncedFn: useDebounceFn(
+          (...args) => this.getSelection(...args),
+          200
+        ),
         barChart: null,
         areaChartOptions: {
           chart: {
@@ -124,9 +130,10 @@
         // this.areaChart.refresh()
         // this.barChart.refresh()
       },
+      '$store.state.analysis.sensor'(): void {
+        this.areaChart.updateOptions({}) // forceUpdate
+      },
       '$store.state.common.resized'(): void {
-        const selection = this.getSelection
-        console.log(selection)
         this.setDefaultSelection(this.barChart)
         // this.barChart.refresh() // cause crash?
       },
@@ -153,8 +160,7 @@
           .sort((a: any, b: any) => {
             return b - a
           })
-
-        if (times.length && xaxis.max < times[0]) {
+        if (times.length) {
           this.setSelection([xaxis.min, xaxis.max])
         }
 
@@ -163,10 +169,8 @@
       getDefaultSelectionInterval(): any {
         const times = this.getTimeline()
         if (!times.length) return []
-
-        const width = Math.floor(times.length * 0.25)
         const lastIndex = this.getTimeline().length - 1
-        const firstIndex = lastIndex - width
+        const firstIndex = 0
 
         return [times[firstIndex][0], times[lastIndex][0]]
       },
@@ -208,33 +212,8 @@
           },
         })
       },
-      setDefaultSelection(chart: any): void {
-        const times = this.getTimeline()
-        if (!times.length) return
-
-        const width = Math.floor(times.length * 0.25)
-        const lastIndex = this.getTimeline().length - 1
-        const firstIndex = lastIndex - width
-        chart.updateOptions({
-          chart: {
-            selection: {
-              xaxis: {
-                min: times[firstIndex][0],
-                max: times[lastIndex][0],
-              },
-            },
-          },
-        })
-      },
-      setPopupTheme(chart: any): void {
-        chart.updateOptions({
-          tooltip: {
-            theme: this.$store.state.common.theme == null ? 'light' : 'dark',
-          },
-        })
-      },
     },
-  }
+  })
 </script>
 
 <style lang="scss">
