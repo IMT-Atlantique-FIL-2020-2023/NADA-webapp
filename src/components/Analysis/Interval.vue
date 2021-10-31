@@ -16,6 +16,7 @@
         style="width: 200px"
         :value="getMeasurementId"
         :options="getMeasurements"
+        :virtual-scroll="false"
         :show-feedback="true"
         filterable
         placeholder="Mesure affichée"
