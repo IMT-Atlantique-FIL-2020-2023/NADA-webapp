@@ -3,16 +3,19 @@
     ref="areaChart"
     width="100%"
     height="260px"
+    type="area"
     :options="areaChartOptions"
-    :series="getSeries()"
+    :series="filteredSeries"
     @mounted="areaChartMounted"
   ></apexchart>
   <apexchart
     ref="barChart"
     width="100%"
     height="130px"
+    type="bar"
+    style="margin-top: -38px"
     :options="barChartOptions"
-    :series="getSeries()"
+    :series="series"
     @selection="getSelection"
     @mounted="barChartMounted"
   ></apexchart>
@@ -28,14 +31,10 @@
         barChart: null,
         areaChartOptions: {
           chart: {
-            type: 'area',
-            id: 'timeline-area',
+            id: 'chart1',
             toolbar: {
               show: false,
               autoSelected: 'pan',
-            },
-            zoom: {
-              enabled: false,
             },
           },
           dataLabels: {
@@ -45,23 +44,23 @@
             type: 'datetime',
           },
           yaxis: {
-            tickAmount: 5,
+            tickAmount: 3,
+            decimalsInFloat: 6,
           },
         },
         barChartOptions: {
           chart: {
-            type: 'bar',
-            id: 'timeline-bar',
+            id: 'chart1',
+            brush: {
+              target: 'chart2',
+              enabled: true,
+            },
             toolbar: {
               show: false,
               autoSelected: 'selection',
             },
-            zoom: {
-              enabled: false,
-            },
             selection: {
               enabled: true,
-              type: 'x',
               fill: {
                 color: '#579ee6',
                 opacity: 0.3,
@@ -97,14 +96,39 @@
         },
       }
     },
+    computed: {
+      series(): any {
+        return [{ data: this.getTimeline() }]
+      },
+      filteredSeries(): any {
+        if (!this.$store.state.analysis.selection.length) {
+          return this.series
+        }
+
+        const lower = this.$store.state.analysis.selection[0]
+        const upper = this.$store.state.analysis.selection[1]
+
+        return [
+          {
+            data: this.getTimeline().filter((e: any) => {
+              return e[0] >= lower && e[0] <= upper
+            }),
+          },
+        ]
+      },
+    },
     watch: {
       '$store.state.common.theme'(): void {
-        this.setPopupTheme(this.barChart)
         this.setPopupTheme(this.areaChart)
+        this.setPopupTheme(this.barChart)
+        // this.areaChart.refresh()
+        // this.barChart.refresh()
       },
       '$store.state.common.resized'(): void {
+        const selection = this.getSelection
+        console.log(selection)
         this.setDefaultSelection(this.barChart)
-        this.barChart.refresh() // refresh to adapt size
+        // this.barChart.refresh() // cause crash?
       },
     },
     methods: {
@@ -116,15 +140,6 @@
       barChartMounted(): void {
         this.barChart = this.$refs.barChart
         this.setDefaultSelection(this.barChart)
-        this.barChart.refresh() // refresh to adapt size
-      },
-      getSeries(): any {
-        return [
-          {
-            name: 'timeline',
-            data: this.getTimeline(),
-          },
-        ]
       },
       getSelection(chartContext: any, { xaxis, yaxis }: any): void {
         /*
@@ -142,6 +157,56 @@
         if (times.length && xaxis.max < times[0]) {
           this.setSelection([xaxis.min, xaxis.max])
         }
+
+        this.setMinMaxValue(this.areaChart)
+      },
+      getDefaultSelectionInterval(): any {
+        const times = this.getTimeline()
+        if (!times.length) return []
+
+        const width = Math.floor(times.length * 0.25)
+        const lastIndex = this.getTimeline().length - 1
+        const firstIndex = lastIndex - width
+
+        return [times[firstIndex][0], times[lastIndex][0]]
+      },
+      setDefaultSelection(chart: any): void {
+        const interval = this.getDefaultSelectionInterval()
+        chart.updateOptions({
+          chart: {
+            selection: {
+              xaxis: {
+                min: interval.length ? interval[0] : null,
+                max: interval.length ? interval[1] : null,
+              },
+            },
+          },
+        })
+      },
+      setPopupTheme(chart: any): void {
+        chart.updateOptions({
+          tooltip: {
+            theme: this.$store.state.common.theme == null ? 'light' : 'dark',
+          },
+        })
+      },
+      setMinMaxValue(chart: any): void {
+        chart.updateOptions({
+          yaxis: {
+            tickAmount: 3,
+            decimalsInFloat: 6,
+            max: Math.max(
+              ...this.getTimeline().map((e: any) => {
+                return e[1]
+              })
+            ),
+            min: Math.min(
+              ...this.getTimeline().map((e: any) => {
+                return e[1]
+              })
+            ),
+          },
+        })
       },
       setDefaultSelection(chart: any): void {
         const times = this.getTimeline()
