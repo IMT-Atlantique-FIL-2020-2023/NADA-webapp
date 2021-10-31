@@ -13,6 +13,10 @@ export default <ActionTree<Analysis, any>>{
               airports {
                     id
                     name
+                    elevationFt
+                    municipality
+                    lat
+                    lon
                 }
             }`,
         error:
@@ -42,11 +46,11 @@ export default <ActionTree<Analysis, any>>{
 
     // setup store values and default selection
     commit('setAirports', request.data.airports)
-    dispatch('selectAirportById', request.data.airports[0].id)
+    dispatch('selectAirportById', request.data.airports[0]?.id)
   },
   selectAirportDefault({ dispatch, state }) {
     if (state.airports.length) {
-      dispatch('selectAirportById', state.airports[0].id)
+      dispatch('selectAirportById', state.airports[0]?.id)
     }
   },
   selectAirportById({ commit, dispatch, state }, id) {
