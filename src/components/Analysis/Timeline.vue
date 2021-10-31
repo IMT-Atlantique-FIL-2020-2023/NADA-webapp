@@ -208,6 +208,31 @@
           },
         })
       },
+      setDefaultSelection(chart: any): void {
+        const times = this.getTimeline()
+        if (!times.length) return
+
+        const width = Math.floor(times.length * 0.25)
+        const lastIndex = this.getTimeline().length - 1
+        const firstIndex = lastIndex - width
+        chart.updateOptions({
+          chart: {
+            selection: {
+              xaxis: {
+                min: times[firstIndex][0],
+                max: times[lastIndex][0],
+              },
+            },
+          },
+        })
+      },
+      setPopupTheme(chart: any): void {
+        chart.updateOptions({
+          tooltip: {
+            theme: this.$store.state.common.theme == null ? 'light' : 'dark',
+          },
+        })
+      },
     },
   }
 </script>
