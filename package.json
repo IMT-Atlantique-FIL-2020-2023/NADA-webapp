@@ -20,6 +20,7 @@
     "@mdi/font": "5.9.55",
     "@revolist/vue3-datagrid": "^3.0.96",
     "@vue/apollo-option": "^4.0.0-alpha.15",
+    "@vueuse/core": "^6.7.4",
     "apexcharts": "^3.29.0",
     "apollo-boost": "^0.4.9",
     "axios": "^0.23.0",

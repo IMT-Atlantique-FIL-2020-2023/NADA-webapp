@@ -16,18 +16,24 @@
     style="margin-top: -38px"
     :options="barChartOptions"
     :series="series"
-    @selection="getSelection"
+    @selection="debouncedFn"
     @mounted="barChartMounted"
   ></apexchart>
 </template>
 <script lang="ts">
+  import { useDebounceFn } from '@vueuse/core'
+  import { defineComponent } from 'vue'
   import { mapGetters, mapMutations } from 'vuex'
 
-  export default {
+  export default defineComponent({
     name: 'Timeline',
-    data(): any {
+    data() {
       return {
         areaChart: null,
+        debouncedFn: useDebounceFn(
+          (...args) => this.getSelection(...args),
+          200
+        ),
         barChart: null,
         areaChartOptions: {
           chart: {
@@ -153,8 +159,7 @@
           .sort((a: any, b: any) => {
             return b - a
           })
-
-        if (times.length && xaxis.max < times[0]) {
+        if (times.length) {
           this.setSelection([xaxis.min, xaxis.max])
         }
 
@@ -170,19 +175,19 @@
 
         return [times[firstIndex][0], times[lastIndex][0]]
       },
-      setDefaultSelection(chart: any): void {
-        const interval = this.getDefaultSelectionInterval()
-        chart.updateOptions({
-          chart: {
-            selection: {
-              xaxis: {
-                min: interval.length ? interval[0] : null,
-                max: interval.length ? interval[1] : null,
-              },
-            },
-          },
-        })
-      },
+      // setDefaultSelection(chart: any): void {
+      //   const interval = this.getDefaultSelectionInterval()
+      //   chart.updateOptions({
+      //     chart: {
+      //       selection: {
+      //         xaxis: {
+      //           min: interval.length ? interval[0] : null,
+      //           max: interval.length ? interval[1] : null,
+      //         },
+      //       },
+      //     },
+      //   })
+      // },
       setPopupTheme(chart: any): void {
         chart.updateOptions({
           tooltip: {
@@ -226,15 +231,8 @@
           },
         })
       },
-      setPopupTheme(chart: any): void {
-        chart.updateOptions({
-          tooltip: {
-            theme: this.$store.state.common.theme == null ? 'light' : 'dark',
-          },
-        })
-      },
     },
-  }
+  })
 </script>
 
 <style lang="scss">
