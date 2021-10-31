@@ -1,19 +1,9 @@
 <template>
   <apexchart
-    ref="areaChart"
-    width="100%"
-    height="260px"
-    type="area"
-    :options="areaChartOptions"
-    :series="filteredSeries"
-    @mounted="areaChartMounted"
-  ></apexchart>
-  <apexchart
     ref="barChart"
     width="100%"
-    height="130px"
+    height="160px"
     type="bar"
-    style="margin-top: -38px"
     :options="barChartOptions"
     :series="series"
     @selection="debouncedFn"
@@ -29,31 +19,11 @@
     name: 'Timeline',
     data() {
       return {
-        areaChart: null,
         debouncedFn: useDebounceFn(
           (...args) => this.getSelection(...args),
           200
         ),
         barChart: null,
-        areaChartOptions: {
-          chart: {
-            id: 'chart1',
-            toolbar: {
-              show: false,
-              autoSelected: 'pan',
-            },
-          },
-          dataLabels: {
-            enabled: false,
-          },
-          xaxis: {
-            type: 'datetime',
-          },
-          yaxis: {
-            tickAmount: 3,
-            decimalsInFloat: 6,
-          },
-        },
         barChartOptions: {
           chart: {
             id: 'chart1',
@@ -106,32 +76,11 @@
       series(): any {
         return [{ data: this.getTimeline() }]
       },
-      filteredSeries(): any {
-        if (!this.$store.state.analysis.selection.length) {
-          return this.series
-        }
-
-        const lower = this.$store.state.analysis.selection[0]
-        const upper = this.$store.state.analysis.selection[1]
-
-        return [
-          {
-            data: this.getTimeline().filter((e: any) => {
-              return e[0] >= lower && e[0] <= upper
-            }),
-          },
-        ]
-      },
     },
     watch: {
       '$store.state.common.theme'(): void {
-        this.setPopupTheme(this.areaChart)
         this.setPopupTheme(this.barChart)
-        // this.areaChart.refresh()
         // this.barChart.refresh()
-      },
-      '$store.state.analysis.sensor'(): void {
-        this.areaChart.updateOptions({}) // forceUpdate
       },
       '$store.state.common.resized'(): void {
         this.setDefaultSelection(this.barChart)
@@ -141,9 +90,6 @@
     methods: {
       ...mapGetters('analysis', ['getTimeline']),
       ...mapMutations('analysis', ['setSelection']),
-      areaChartMounted(): void {
-        this.areaChart = this.$refs.areaChart
-      },
       barChartMounted(): void {
         this.barChart = this.$refs.barChart
         this.setDefaultSelection(this.barChart)
@@ -163,8 +109,6 @@
         if (times.length) {
           this.setSelection([xaxis.min, xaxis.max])
         }
-
-        this.setMinMaxValue(this.areaChart)
       },
       getDefaultSelectionInterval(): any {
         const times = this.getTimeline()
@@ -191,24 +135,6 @@
         chart.updateOptions({
           tooltip: {
             theme: this.$store.state.common.theme == null ? 'light' : 'dark',
-          },
-        })
-      },
-      setMinMaxValue(chart: any): void {
-        chart.updateOptions({
-          yaxis: {
-            tickAmount: 3,
-            decimalsInFloat: 6,
-            max: Math.max(
-              ...this.getTimeline().map((e: any) => {
-                return e[1]
-              })
-            ),
-            min: Math.min(
-              ...this.getTimeline().map((e: any) => {
-                return e[1]
-              })
-            ),
           },
         })
       },

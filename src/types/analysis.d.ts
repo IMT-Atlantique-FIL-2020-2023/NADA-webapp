@@ -1,6 +1,10 @@
 interface Airport {
   id: string
-  name: string | undefined
+  name: string
+  elevationFt: number
+  municipality: string
+  lat: number
+  lon: number
 }
 
 interface Sensor {

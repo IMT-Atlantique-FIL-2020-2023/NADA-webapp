@@ -62,11 +62,41 @@ export default <GetterTree<Analysis, any>>{
   getMeasurementId(state) {
     return `${state.sensor?.id}-${state.sensor?.measurement.id}`
   },
-  getTimeline(state) {
-    if (state.sensor == null) return []
+  getSensorsByType(state): Array<any> {
+    // Extract types  and name from sensors
+    const all_types: Array<any> = state.sensors.map((e: Sensor) => ({
+      id: e.measurement.id,
+      name: e.measurement.name,
+    }))
 
+    // Erase duplicates in types
+    const map_types: Array<any> = [
+      ...new Map(all_types.map((type: any) => [type.id, type])).values(),
+    ]
+    console.log(
+      map_types.map((type: any) => {
+        return {
+          id: type.id,
+          name: type.name,
+          sensors: state.sensors.filter((e: Sensor) => {
+            return e.measurement.id === type.id
+          }),
+        }
+      })
+    )
+    return map_types.map((type: any) => {
+      return {
+        id: type.id,
+        name: type.name,
+        sensors: state.sensors.filter((e: Sensor) => {
+          return e.measurement.id === type.id
+        }),
+      }
+    })
+  },
+  getMeanMeasureInterval: (state) => (id: string) => {
     const sensor = state.sensors.find((e: any) => {
-      return e.id === state.sensor?.id
+      return e.id === id
     })
 
     if (sensor?.getMeanMeasureInterval == null) return []
@@ -76,6 +106,10 @@ export default <GetterTree<Analysis, any>>{
       const startDate = new Date(stringDate).getTime()
       return [startDate, e.value]
     })
+  },
+  getTimeline(state, getters) {
+    if (state.sensor == null) return []
+    return getters.getMeanMeasureInterval(state.sensor?.id)
   },
   getData(state) {
     return state.sensors
