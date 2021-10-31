@@ -12,9 +12,9 @@
   </n-tabs>
 </template>
 <script lang="ts">
-  import Weather from '@/components/Graphs/Weather.vue'
-  import Position from '@/components/Graphs/Position.vue'
-  import Pollution from '@/components/Graphs/Pollution.vue'
+  import Weather from '@/components/Graphs/Weather/Weather.vue'
+  import Position from '@/components/Graphs/Position/Position.vue'
+  import Pollution from '@/components/Graphs/Pollution/Pollution.vue'
 
   export default {
     name: 'Graphs',
