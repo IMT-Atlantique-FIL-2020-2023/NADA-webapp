@@ -19,6 +19,8 @@
     "@intlify/vite-plugin-vue-i18n": "^2.4.0",
     "@mdi/font": "5.9.55",
     "@revolist/vue3-datagrid": "^3.0.96",
+    "@svgdotjs/svg.draggable.js": "^3.0.2",
+    "@svgdotjs/svg.js": "^3.1.1",
     "@vue/apollo-option": "^4.0.0-alpha.15",
     "apexcharts": "^3.29.0",
     "apollo-boost": "^0.4.9",
