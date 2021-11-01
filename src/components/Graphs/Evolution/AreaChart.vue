@@ -49,9 +49,9 @@
         return [{ data: this.data }]
       },
       filteredSeries(): any {
-        if (!this.$store.state.analysis.selection.length) {
-          return this.series
-        }
+        if (!this.$store.state.analysis.selection.length) return this.series
+        if (this.$store.state.analysis.selection[0] == null) return this.series
+        if (this.$store.state.analysis.selection[1] == null) return this.series
 
         const lower = this.$store.state.analysis.selection[0]
         const upper = this.$store.state.analysis.selection[1]
