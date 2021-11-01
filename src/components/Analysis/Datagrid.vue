@@ -1,13 +1,35 @@
 <template>
-  <v-grid
-    :theme="isThemeDark() ? 'darkMaterial' : 'material'"
-    :columns="columns"
-    :grouping="grouping"
-    :source="getSelectedData()"
-    :filter="false"
-    :auto-size-column="autosize"
-    style="height: calc(100% - 350px)"
-  ></v-grid>
+  <n-layout has-sider sider-placement="right" style="height: 100%">
+    <n-layout-content content-style="padding: 24px;">
+      <v-grid
+        :theme="isThemeDark() ? 'darkMaterial' : 'material'"
+        :columns="columns"
+        :grouping="grouped"
+        :source="getSelectedData()"
+        :filter="false"
+        :auto-size-column="autosize"
+        style="height: calc(100% - 350px)"
+      ></v-grid>
+    </n-layout-content>
+    <n-layout-sider
+      collapse-mode="transform"
+      :default-collapsed="true"
+      :collapsed-width="20"
+      :width="200"
+      show-trigger="arrow-circle"
+      content-style="padding: 0px 20px;"
+      bordered
+    >
+      <h3>Grouping</h3>
+      <n-checkbox-group v-model:value="grouping">
+        <n-grid :y-gap="8" :cols="1">
+          <n-gi v-for="column in columns" :key="column.prop">
+            <n-checkbox :value="column.prop" :label="column.name" />
+          </n-gi>
+        </n-grid>
+      </n-checkbox-group>
+    </n-layout-sider>
+  </n-layout>
 </template>
 <script lang="ts">
   import VGrid from '@revolist/vue3-datagrid'
@@ -21,9 +43,14 @@
       return {
         columns: [
           {
+            prop: 'sensor',
+            name: 'Sensor',
+            size: 80,
+            sortable: true,
+          },
+          {
             prop: 'id',
             name: 'Id',
-            size: 150,
             sortable: true,
           },
           {
@@ -60,12 +87,20 @@
             sortable: true,
           },
         ],
-        grouping: { props: ['mesure'], expandedAll: true },
+        grouping: ['name', 'sensor'],
         autosize: {
           mode: 'headerClickAutosize ',
           allColumns: true,
         },
       }
+    },
+    computed: {
+      grouped(): any {
+        return {
+          props: this.grouping,
+          expandedAll: true,
+        }
+      },
     },
     methods: {
       ...mapGetters('analysis', ['getSelectedData']),

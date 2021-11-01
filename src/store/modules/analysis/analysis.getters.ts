@@ -73,17 +73,7 @@ export default <GetterTree<Analysis, any>>{
     const map_types: Array<any> = [
       ...new Map(all_types.map((type: any) => [type.id, type])).values(),
     ]
-    console.log(
-      map_types.map((type: any) => {
-        return {
-          id: type.id,
-          name: type.name,
-          sensors: state.sensors.filter((e: Sensor) => {
-            return e.measurement.id === type.id
-          }),
-        }
-      })
-    )
+
     return map_types.map((type: any) => {
       return {
         id: type.id,
@@ -121,6 +111,7 @@ export default <GetterTree<Analysis, any>>{
         const m = e.measurement
         return e.getMeanMeasureInterval.map((s) => {
           return {
+            sensor: e.id,
             id: s.id,
             startDate: s.startDate,
             endDate: s.endDate,
