@@ -17,7 +17,7 @@
               :opacity="0.9"
             ></ol-style-icon>
             <ol-style-text
-              :text="`Aéroport de ${point.label}`"
+              :text="point.label"
               :scale="1.3"
               :offset-y="10"
             ></ol-style-text>
@@ -72,10 +72,8 @@
       },
     },
     async mounted(): Promise<void> {
-      this.$store.state.common.loading = 'start'
-      this.coordinates = await this.getAirportsCoordinates
+      this.coordinates = this.getAirportsCoordinates
 
-      this.$store.state.common.loading = 'finish'
       if (this.coordinates.length) {
         this.$refs.map.center = this.mappedCoordinates[0].coordinates
       }

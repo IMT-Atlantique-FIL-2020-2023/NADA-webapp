@@ -1,5 +1,9 @@
 <template>
-  <n-layout has-sider sider-placement="right" style="height: 100%">
+  <n-layout
+    has-sider
+    sider-placement="right"
+    style="height: calc(100% - 350px)"
+  >
     <n-layout-content content-style="padding: 24px;">
       <v-grid
         :theme="isThemeDark() ? 'darkMaterial' : 'material'"
@@ -8,7 +12,6 @@
         :source="getSelectedData()"
         :filter="false"
         :auto-size-column="autosize"
-        style="height: calc(100% - 350px)"
       ></v-grid>
     </n-layout-content>
     <n-layout-sider

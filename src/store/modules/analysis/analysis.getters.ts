@@ -19,7 +19,18 @@ export default <GetterTree<Analysis, any>>{
   getAirportId(state) {
     return state.airport?.id
   },
-  async getAirportsCoordinates(state, getters) {
+  getAirportsCoordinates(state) {
+    return state.airports.map((e: any) => ({
+      label: e.name,
+      value: e.id,
+      coordinates: [e.lon, e.lat],
+    }))
+  },
+  /* ---------------------------------------- */
+  /* @Deprecated, now use the airport datas   */
+  /* (see getAirportsCoordinates above.)      */
+  /* ---------------------------------------- */
+  async getAirportsCoordinatesFromOSM(state, getters) {
     return await Promise.all(
       getters.getAirports.map(async (airport: any) => {
         return await axios
@@ -125,9 +136,10 @@ export default <GetterTree<Analysis, any>>{
       .flat()
   },
   getSelectedData(state, getters) {
-    if (!state.selection.length) {
-      return getters.getData
-    }
+    if (!state.selection.length) return getters.getData
+    if (state.selection[0] == null) return getters.getData
+    if (state.selection[1] == null) return getters.getData
+
     return getters.getData.filter((e: any) => {
       return (
         new Date(e.startDate) >= new Date(state.selection[0]) &&

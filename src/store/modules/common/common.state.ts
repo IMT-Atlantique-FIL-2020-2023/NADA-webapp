@@ -1,5 +1,7 @@
+import { darkTheme } from 'naive-ui'
+
 export default {
-  theme: null,
+  theme: darkTheme,
   error: null,
   info: null,
   loading: null,

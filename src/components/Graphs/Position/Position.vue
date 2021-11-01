@@ -60,8 +60,6 @@
 
         this.trajectories = path.filter((e) => Boolean(e[0]) && Boolean(e[1]))
 
-        console.log(this.trajectories)
-
         this.map.center = base
         this.map.zoom = 20
       },
