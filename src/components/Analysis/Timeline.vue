@@ -55,7 +55,7 @@
               },
               dynamicAnimation: {
                 enabled: true,
-                speed: 450,
+                speed: 100,
               },
             },
           },
@@ -67,7 +67,7 @@
           },
           yaxis: {
             tickAmount: 2,
-            decimalsInFloat: 6,
+            decimalsInFloat: 2,
           },
         },
       }
@@ -80,10 +80,8 @@
     watch: {
       '$store.state.common.theme'(): void {
         this.setPopupTheme(this.barChart)
+        this.setDefaultSelection(this.barChart)
         // this.barChart.refresh()
-      },
-      '$store.state.analysis.sensor'(): void {
-        this.areaChart.updateOptions({}) // forceUpdate
       },
       '$store.state.common.resized'(): void {
         this.setDefaultSelection(this.barChart)

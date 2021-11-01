@@ -3,6 +3,8 @@
     ref="map"
     style="height: calc(100% - 80px)"
     @selection="selection"
+    @zoomChanged="zoomed"
+    @centerChanged="mooved"
   >
     <template #overlay>
       <ol-source-vector>
@@ -27,14 +29,11 @@
       <n-row style="margin-bottom: 10px">
         <n-col :span="12">
           <n-statistic label="Coordonnées">
-            [{{ Number(currentCenter[0]).toFixed(2) }};
-            {{ Number(currentCenter[1]).toFixed(2) }}]
+            [{{ center[0] }}; {{ center[1] }}]
           </n-statistic>
         </n-col>
         <n-col :span="12">
-          <n-statistic label="Zoom">
-            x{{ Number(currentZoom).toFixed(2) }}
-          </n-statistic>
+          <n-statistic label="Zoom"> x{{ zoom }} </n-statistic>
         </n-col>
       </n-row>
     </template>
@@ -54,6 +53,8 @@
       return {
         marker: marker,
         coordinates: [],
+        zoom: 8,
+        center: [0, 0],
       }
     },
     computed: {
@@ -62,12 +63,6 @@
         'getAirport',
         'getAirportsCoordinates',
       ]),
-      currentCenter(): any {
-        return this.$refs.map?.center ? this.$refs.map.center : [0, 0]
-      },
-      currentZoom(): any {
-        return this.$refs.map?.zoom ? this.$refs.map.zoom : 8
-      },
       mappedCoordinates(): any {
         return this.coordinates.map((e: any) => ({
           label: e.label,
@@ -107,6 +102,12 @@
           const date = new Date().toTimeString().split(' ')[0]
           this.$store.state.common.error = `[${date}] An error occured during the selection...`
         }
+      },
+      mooved(value: Array<number>): void {
+        this.center = value.map((e: number) => Number(e).toFixed(2))
+      },
+      zoomed(value: number): void {
+        this.zoom = Number(value).toFixed(2)
       },
     },
   }

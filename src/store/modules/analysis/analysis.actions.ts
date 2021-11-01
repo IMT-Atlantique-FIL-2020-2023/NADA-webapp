@@ -80,8 +80,8 @@ export default <ActionTree<Analysis, any>>{
                         unit
                     }
                     getMeanMeasureInterval(
-                        start: "${state.period[0].toISOString()}"
-                        end: "${state.period[1].toISOString()}"
+                        start: "${new Date(state.period[0]).toISOString()}"
+                        end: "${new Date(state.period[1]).toISOString()}"
                         discretize: "1m"
                         discretizeMode: FLUX_DURATION
                     ) {
