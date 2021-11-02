@@ -18,6 +18,8 @@
     props: {
       data: { type: Array, default: [] },
       color: { type: String, default: '' },
+      title: { type: String, default: '' },
+      legend: { type: String, default: '' },
     },
     data() {
       return {
@@ -39,7 +41,7 @@
           },
           yaxis: {
             tickAmount: 3,
-            decimalsInFloat: 6,
+            decimalsInFloat: 2,
           },
         },
       }
@@ -68,8 +70,6 @@
     watch: {
       '$store.state.common.theme'(): void {
         this.setPopupTheme(this.areaChart)
-        // this.areaChart.refresh()
-        // this.barChart.refresh()
       },
       '$store.state.analysis.sensor'(): void {
         this.areaChart.updateOptions({}) // forceUpdate
@@ -81,19 +81,34 @@
       ...mapMutations('analysis', ['setSelection']),
       areaChartMounted(): void {
         this.areaChart = this.$refs.areaChart
+        this.setPopupTheme(this.areaChart)
+        this.setLabel(this.areaChart)
       },
       setPopupTheme(chart: any): void {
+        console.log(chart)
         chart.updateOptions({
           tooltip: {
             theme: this.$store.state.common.theme == null ? 'light' : 'dark',
           },
         })
       },
+      setLabel(chart: any): void {
+        chart.updateOptions({
+          xaxis: {
+            title: {
+              text: this.title,
+            },
+          },
+          yaxis: {
+            title: {
+              text: this.legend,
+            },
+          },
+        })
+      },
       setMinMaxValue(chart: any): void {
         chart.updateOptions({
           yaxis: {
-            tickAmount: 3,
-            decimalsInFloat: 6,
             max: Math.max(
               ...this.data.map((e: any) => {
                 return e[1]

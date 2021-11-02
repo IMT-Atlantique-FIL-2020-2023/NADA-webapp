@@ -27,6 +27,9 @@
         dark: false,
       }
     },
+    mounted() {
+      this.dark = this.$store.state.common.theme != null
+    },
     methods: {
       ...mapMutations('common', ['setTheme']),
       updateTheme(): void {

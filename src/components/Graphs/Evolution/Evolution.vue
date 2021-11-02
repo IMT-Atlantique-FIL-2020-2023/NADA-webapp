@@ -11,6 +11,8 @@
             v-for="(sensor, i) in type.sensors"
             :key="sensor"
             :data="getMeanMeasureInterval()(sensor.id, sensor.measurement.id)"
+            :title="`Sensor ${sensor.id}`"
+            :legend="`${sensor.measurement.id} (in ${sensor.measurement.unit})`"
             :color="getColor(j + i)"
           ></area-chart>
         </n-grid-item>

@@ -4,7 +4,7 @@
       <n-date-picker
         v-model:value="$store.state.analysis.period"
         style="padding-right: 220px"
-        type="daterange"
+        type="datetimerange"
         :show-feedback="true"
         :update-value-on-close="true"
         @update:value="fetchSensors()"
