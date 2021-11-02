@@ -10,7 +10,7 @@ interface Common {
 
 interface Analysis {
   layout: string
-  period: Array<Date>
+  period: Array<number>
   day: boolean
   airport: Airport | undefined
   airports: Array<Airport>
