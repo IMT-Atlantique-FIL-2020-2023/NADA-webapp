@@ -59,8 +59,6 @@
 
 [![NADA webapp Screen Shot][screenshot]](https://example.com)
 
-> `// TODO`
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
@@ -81,8 +79,6 @@
 
 ## Getting Started
 
-> `// TODO`
-
 ### Prerequisites
 
 You will need several programs to run this application on your machine:
@@ -92,6 +88,7 @@ You will need several programs to run this application on your machine:
 - [node 14](), for the development or deployment server
 
 For node, we recommend the use of [nvm]()
+
 ```
 nvm install 14.X.X
 nvm use 14.X.X
@@ -110,6 +107,7 @@ nvm use 14.X.X
 4. Launch the appolo mock (`npm mock:api`)
 
 > **In case of problem with the mock, do it manually with:**
+>
 > ```
 > npm install -g graphql-faker
 > graphql-faker --port 9002 schema.graphql
